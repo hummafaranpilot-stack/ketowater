@@ -17,10 +17,8 @@ temp/
 
 # Large binary assets — too big for git
 videos/
-video_clips/
 creative-assets/zips/
+creative-assets/videos/
 *.zip
-*.mp4
-*.webm
 *.mov
 *.avi
