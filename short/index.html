@@ -6144,12 +6144,15 @@ function replayVideo(id){var p=document.querySelector('.mv-player[data-video-id=
       loader.classList.remove('mv-loader-hidden','mv-loader-ready');
       displayPct=0; targetPct=0; renderPct(0);
     }
+    var playIntended = false;
+    vid.addEventListener('play',  function(){ playIntended = true; });
+    vid.addEventListener('pause', function(){ playIntended = false; });
     vid.addEventListener('progress', checkBuffer);
     vid.addEventListener('canplay', checkBuffer);
     vid.addEventListener('canplaythrough', function(){ if(!loader.classList.contains('mv-loader-hidden')) animateTo(100); });
-    vid.addEventListener('playing', function(){ if(rafId){ cancelAnimationFrame(rafId); rafId=null; } loader.classList.add('mv-loader-hidden'); });
-    vid.addEventListener('waiting', function(){ resetLoader(); checkBuffer(); });
-    vid.addEventListener('stalled', resetLoader);
+    vid.addEventListener('playing', function(){ playIntended=true; if(rafId){ cancelAnimationFrame(rafId); rafId=null; } loader.classList.add('mv-loader-hidden'); });
+    vid.addEventListener('waiting', function(){ if(!playIntended) return; resetLoader(); checkBuffer(); });
+    vid.addEventListener('stalled', function(){ if(!playIntended) return; resetLoader(); });
   });
 })();
 // Custom poster frame: seek to data-poster-time on metadata load, reset on first play
