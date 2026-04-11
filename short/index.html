@@ -32,10 +32,20 @@
 
 <title>KetoWater - Trusted Nutra Products</title>
 
+<!-- Preconnect to external origins -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://cdn.trustednutraproduct.com">
+<!-- Critical local CSS — loaded normally -->
 <link href="./css/skeleton.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <link href="./css/main.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800&family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;1,400;1,700&display=swap" rel="stylesheet">
+<!-- Google Fonts — non-blocking (media=print trick) -->
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800&family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;1,400;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800&family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;1,400;1,700&display=swap" rel="stylesheet"></noscript>
+<!-- Font Awesome — non-blocking -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"></noscript>
 
 <style>
 /* === KetoWater Hero (replaces former #headline + #prod-description) === */
@@ -2350,7 +2360,7 @@ window.__lo_site_id = 330757;
 
 <link href="./css/loader/loader.css" rel="stylesheet" />	<!-- Additional CSS Goes Here -->
 	<link href="./css/landerstyle.css" rel="stylesheet" />
-<script src="https://cdn.trustednutraproduct.com/t.js?v=ketowater-trustednutraproduct-com"></script>
+<script src="https://cdn.trustednutraproduct.com/t.js?v=ketowater-trustednutraproduct-com" async></script>
 
 <!-- KetoWater Shared Features CSS -->
 <style>
@@ -3238,8 +3248,8 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 	<div class="hero">
 
 		<!-- Real image so the hero auto-sizes to its natural aspect ratio -->
-		<img src="../product_images/hero-bg.webp" alt="" class="hero-bg-img hero-bg-desktop">
-		<img src="../product_images/hero-bg-mobile.webp" alt="" class="hero-bg-img hero-bg-mobile">
+		<img src="../product_images/hero-bg.webp" alt="" class="hero-bg-img hero-bg-desktop" fetchpriority="high">
+		<img src="../product_images/hero-bg-mobile.webp" alt="" class="hero-bg-img hero-bg-mobile" fetchpriority="high">
 
 		<div class="hero-logo">
 			<a href="index.html"><img src="../logo.webp" alt="KetoWater"></a>
