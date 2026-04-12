@@ -6123,8 +6123,8 @@ if(i.player.getPlayerState()===1&&i.ctr.classList.contains('active')){
 /* Show poster INSTANTLY before YouTube renders its pause screen */
 if(i.poster){i.poster.style.transition='none';i.poster.classList.remove('hidden');}
 i.player.pauseVideo();return;}}catch(e){}
-/* If preWarm was silently playing, stop it and restart from 0 for the user */
-if(i.preWarming){i.preWarming=false;try{i.player.seekTo(0);}catch(ex){}}
+/* If preWarm was silently playing, mark it done — video is already buffered at start */
+if(i.preWarming){i.preWarming=false;}
 muteAllOthers(id);pauseAllOthers(id);i.muted=false;i.player.unMute();setMuteUI(i.mb,false);i.ctr.classList.add('active');i.player.playVideo();}else{muteAllOthers(id);pauseAllOthers(id);i.muted=false;setMuteUI(i.mb,false);if(i.po)i.po.classList.add('loading');createAndPlay(id);}}
 function ytMute(id){var i=pInfo[id];if(!i.player)return;if(i.muted){muteAllOthers(id);pauseAllOthers(id);i.muted=false;i.player.unMute();setMuteUI(i.mb,false);i.ec.classList.remove('show');i.pf.style.width='0%';if(i.po)i.po.classList.remove('hidden');i.ctr.classList.add('active');i.player.seekTo(0);i.player.playVideo();}else{i.player.mute();i.muted=true;setMuteUI(i.mb,true);}}
 function setupYTPlayer(p){var g=getElems(p),ytId=p.getAttribute('data-yt-id'),ctr=document.getElementById('yt-'+g.id);pInfo[g.id]={ytId:ytId,ctr:ctr,pf:g.pf,ec:g.ec,mb:g.mb,po:g.po,poster:g.poster,player:null,muted:true,creating:false,preWarming:false};g.po.onclick=function(){ytToggle(g.id);};g.mb.addEventListener('click',function(e){e.stopPropagation();ytMute(g.id);});g.mb.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();ytMute(g.id);});}
