@@ -4855,7 +4855,7 @@ button:focus-visible {
   <div class="mt-product-card mt-featured" data-card="6bottle">
     <div class="mt-product-header">
       <h3>5 + 1 JARS</h3>
-      <p class="mt-product-subtitle"><span class="mt-sub-badge">+1 Bottle Free</span><span class="mt-sub-divider">|</span><span class="mt-sub-supply">150 Day Supply</span></p>
+      <p class="mt-product-subtitle"><span class="mt-sub-badge">+1 Bottle Free</span><span class="mt-sub-divider">|</span><span class="mt-sub-supply">180 Day Supply</span></p>
     </div>
     <div class="mt-product-content">
       <div class="mt-product-image">
@@ -5699,7 +5699,7 @@ button:focus-visible {
     position: absolute !important;
     top: 7px !important;
     right: 10px !important;
-    color: rgba(255,255,255,0) !important;
+    color: rgba(255,255,255,0.65) !important;
     font-size: 15px !important;
     background: none !important;
     border: none !important;
@@ -5714,9 +5714,6 @@ button:focus-visible {
 }
 .custom-social-proof .custom-close::before,
 .custom-social-proof .custom-close::after { display: none !important; content: none !important; }
-.custom-social-proof .custom-notification:hover .custom-close {
-    color: rgba(255,255,255,0.55) !important;
-}
 .custom-social-proof .custom-close:hover { color: #fff !important; }
 /* Bottom progress bar */
 .custom-social-proof .kw-progress-bar {
@@ -5942,6 +5939,85 @@ button:focus-visible {
             setTimeout(function() { section.style.display = 'none'; }, 450);
         });
     }
+
+    /* ---------- swipe to dismiss (left / right / down) ---------- */
+    (function() {
+        var card    = el('.custom-social-proof .custom-notification');
+        var section = el('.custom-social-proof');
+        if (!card || !section) return;
+
+        var sx, sy, st, dragging = false;
+
+        function saveCooldown() {
+            try { localStorage.setItem(COOLDOWN_KEY, Date.now().toString()); } catch(e) {}
+            triggered = true;
+        }
+
+        function flingOut(dx, dy) {
+            saveCooldown();
+            var rotation = dx * 0.12;
+            var tx = dx > 0 ? '130%' : (dx < 0 ? '-130%' : '0');
+            var ty = dy > 0 && Math.abs(dy) > Math.abs(dx) ? '130%' : '0';
+            card.style.transition = 'transform 0.38s cubic-bezier(0.55,0,1,0.45), opacity 0.38s ease';
+            card.style.transform  = 'translateX(' + tx + ') translateY(' + ty + ') rotate(' + rotation + 'deg)';
+            card.style.opacity    = '0';
+            setTimeout(function() {
+                section.style.display = 'none';
+                card.style.cssText    = ''; /* reset inline styles */
+            }, 400);
+        }
+
+        function snapBack() {
+            card.style.transition = 'transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s';
+            card.style.transform  = '';
+            card.style.opacity    = '';
+        }
+
+        card.addEventListener('touchstart', function(e) {
+            var t = e.touches[0];
+            sx = t.clientX; sy = t.clientY; st = Date.now();
+            dragging = true;
+            card.style.transition = 'none';
+        }, { passive: true });
+
+        card.addEventListener('touchmove', function(e) {
+            if (!dragging) return;
+            var t  = e.touches[0];
+            var dx = t.clientX - sx;
+            var dy = t.clientY - sy;
+            /* only allow downward or sideways drag, not upward */
+            var clampedDy = Math.max(0, dy);
+            var rot = dx * 0.08;
+            var dist = Math.sqrt(dx * dx + clampedDy * clampedDy);
+            card.style.transform = 'translateX(' + dx + 'px) translateY(' + clampedDy + 'px) rotate(' + rot + 'deg)';
+            card.style.opacity   = Math.max(0.2, 1 - dist / 220);
+        }, { passive: true });
+
+        card.addEventListener('touchend', function(e) {
+            if (!dragging) return;
+            dragging = false;
+            var t   = e.changedTouches[0];
+            var dx  = t.clientX - sx;
+            var dy  = t.clientY - sy;
+            var dt  = Math.max(1, Date.now() - st);
+            var vx  = Math.abs(dx) / dt;
+            var vy  = dy / dt;
+
+            var DIST = 55, VEL = 0.28;
+            var swipeH = Math.abs(dx) > DIST || vx > VEL;
+            var swipeD = dy > DIST || vy > VEL;
+
+            if (swipeH || swipeD) {
+                flingOut(swipeH ? dx : 0, swipeD && !swipeH ? dy : 0);
+            } else {
+                snapBack();
+            }
+        });
+
+        card.addEventListener('touchcancel', function() {
+            if (dragging) { dragging = false; snapBack(); }
+        });
+    })();
 })();
 </script>
 
