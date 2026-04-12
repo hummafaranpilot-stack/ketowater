@@ -19,8 +19,8 @@ temp/
 videos/
 creative-assets/zips/
 creative-assets/videos/
-video_clips/*.webm
-video_clips/*.mp4
+**/video_clips/*.webm
+**/video_clips/*.mp4
 *.zip
 *.mov
 *.avi
