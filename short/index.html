@@ -6081,7 +6081,18 @@ function muteAllOthers(skipId){Object.keys(pInfo).forEach(function(id){if(id===s
 function pauseAllOthers(skipId){Object.keys(pInfo).forEach(function(id){if(id===skipId)return;var i=pInfo[id];if(!i.player)return;try{if(i.player.getPlayerState()===1)i.player.pauseVideo();}catch(e){}});document.querySelectorAll('.mv-player:not([data-yt-id]) video').forEach(function(v){if(v.closest('.mv-player').getAttribute('data-video-id')===skipId)return;if(!v.paused)v.pause();});}
 function startTimer(id){stopTimer(id);timers[id]=setInterval(function(){var i=pInfo[id];if(!i||!i.player)return;try{var d=i.player.getDuration();if(d>0)i.pf.style.width=(i.player.getCurrentTime()/d*100)+'%';}catch(e){}},300);}
 function stopTimer(id){if(timers[id]){clearInterval(timers[id]);delete timers[id];}}
-function onYTState(id,s){var i=pInfo[id];if(s===1){if(i.po){i.po.classList.remove('loading');i.po.classList.add('playing');i.po.classList.remove('paused');}if(i.poster)i.poster.classList.add('hidden');startTimer(id);}else if(s===2){if(i.po&&!i.ec.classList.contains('show')){i.po.classList.remove('playing');i.po.classList.add('paused');}stopTimer(id);}else if(s===0){i.ctr.classList.remove('active');if(i.poster)i.poster.classList.remove('hidden');i.ec.classList.add('show');i.pf.style.width='100%';if(i.po)i.po.classList.add('hidden');stopTimer(id);}}
+function onYTState(id,s){var i=pInfo[id];
+/* Ignore all state events while container is hidden (preWarm buffering) */
+if(!i.ctr.classList.contains('active')){stopTimer(id);return;}
+if(s===1){if(i.po){i.po.classList.remove('loading');i.po.classList.add('playing');i.po.classList.remove('paused');}
+/* Restore transition then fade poster out as video plays */
+if(i.poster){i.poster.style.transition='';i.poster.classList.add('hidden');}
+startTimer(id);}else if(s===2){if(i.po&&!i.ec.classList.contains('show')){i.po.classList.remove('playing');i.po.classList.add('paused');}
+/* Instantly cover with poster so YouTube's pause screen never shows */
+if(i.poster){i.poster.style.transition='none';i.poster.classList.remove('hidden');}
+stopTimer(id);}else if(s===0){i.ctr.classList.remove('active');
+if(i.poster){i.poster.style.transition='';i.poster.classList.remove('hidden');}
+i.ec.classList.add('show');i.pf.style.width='100%';if(i.po)i.po.classList.add('hidden');stopTimer(id);}}
 function createAndPlay(id){
 var i=pInfo[id];
 /* Player already pre-warmed — just show and play */
@@ -6095,7 +6106,7 @@ i.ctr.classList.add('active');
 var el=document.createElement('div');
 i.ctr.appendChild(el);
 new YT.Player(el,{videoId:i.ytId,playerVars:{controls:0,rel:0,modestbranding:1,iv_load_policy:3,playsinline:1,enablejsapi:1},events:{onReady:function(e){i.player=e.target;i.creating=false;e.target.unMute();e.target.playVideo();},onStateChange:function(e){onYTState(id,e.data);}}});}
-/* Pre-warm: create hidden player as soon as video enters viewport so first click is instant */
+/* Pre-warm: create hidden player AND play muted to buffer video — first click becomes instant */
 function preWarm(id){
 var i=pInfo[id];
 if(i.creating||i.player)return;
@@ -6103,10 +6114,20 @@ i.creating=true;
 if(!window.YT||typeof window.YT.Player!=='function'){setTimeout(function(){i.creating=false;preWarm(id);},500);return;}
 var el=document.createElement('div');
 i.ctr.appendChild(el);
-new YT.Player(el,{videoId:i.ytId,playerVars:{controls:0,rel:0,modestbranding:1,iv_load_policy:3,playsinline:1,enablejsapi:1,autoplay:0},events:{onReady:function(e){i.player=e.target;i.creating=false;},onStateChange:function(e){onYTState(id,e.data);}}});}
-function ytToggle(id){var i=pInfo[id];if(i.player){try{if(i.player.getPlayerState()===1){i.player.pauseVideo();return;}}catch(e){}muteAllOthers(id);pauseAllOthers(id);i.muted=false;i.player.unMute();setMuteUI(i.mb,false);i.ctr.classList.add('active');i.player.playVideo();}else{muteAllOthers(id);pauseAllOthers(id);i.muted=false;setMuteUI(i.mb,false);if(i.po)i.po.classList.add('loading');createAndPlay(id);}}
+new YT.Player(el,{videoId:i.ytId,playerVars:{controls:0,rel:0,modestbranding:1,iv_load_policy:3,playsinline:1,enablejsapi:1,autoplay:0},events:{onReady:function(e){i.player=e.target;i.creating=false;
+/* Play muted in hidden container — buffers video so user click plays instantly */
+i.preWarming=true;e.target.mute();e.target.playVideo();},onStateChange:function(e){onYTState(id,e.data);}}});}
+function ytToggle(id){var i=pInfo[id];if(i.player){try{
+/* Only treat as pause if the container is actively showing (not a preWarm buffer) */
+if(i.player.getPlayerState()===1&&i.ctr.classList.contains('active')){
+/* Show poster INSTANTLY before YouTube renders its pause screen */
+if(i.poster){i.poster.style.transition='none';i.poster.classList.remove('hidden');}
+i.player.pauseVideo();return;}}catch(e){}
+/* If preWarm was silently playing, stop it and restart from 0 for the user */
+if(i.preWarming){i.preWarming=false;try{i.player.seekTo(0);}catch(ex){}}
+muteAllOthers(id);pauseAllOthers(id);i.muted=false;i.player.unMute();setMuteUI(i.mb,false);i.ctr.classList.add('active');i.player.playVideo();}else{muteAllOthers(id);pauseAllOthers(id);i.muted=false;setMuteUI(i.mb,false);if(i.po)i.po.classList.add('loading');createAndPlay(id);}}
 function ytMute(id){var i=pInfo[id];if(!i.player)return;if(i.muted){muteAllOthers(id);pauseAllOthers(id);i.muted=false;i.player.unMute();setMuteUI(i.mb,false);i.ec.classList.remove('show');i.pf.style.width='0%';if(i.po)i.po.classList.remove('hidden');i.ctr.classList.add('active');i.player.seekTo(0);i.player.playVideo();}else{i.player.mute();i.muted=true;setMuteUI(i.mb,true);}}
-function setupYTPlayer(p){var g=getElems(p),ytId=p.getAttribute('data-yt-id'),ctr=document.getElementById('yt-'+g.id);pInfo[g.id]={ytId:ytId,ctr:ctr,pf:g.pf,ec:g.ec,mb:g.mb,po:g.po,poster:g.poster,player:null,muted:true,creating:false};g.po.onclick=function(){ytToggle(g.id);};g.mb.addEventListener('click',function(e){e.stopPropagation();ytMute(g.id);});g.mb.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();ytMute(g.id);});}
+function setupYTPlayer(p){var g=getElems(p),ytId=p.getAttribute('data-yt-id'),ctr=document.getElementById('yt-'+g.id);pInfo[g.id]={ytId:ytId,ctr:ctr,pf:g.pf,ec:g.ec,mb:g.mb,po:g.po,poster:g.poster,player:null,muted:true,creating:false,preWarming:false};g.po.onclick=function(){ytToggle(g.id);};g.mb.addEventListener('click',function(e){e.stopPropagation();ytMute(g.id);});g.mb.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();ytMute(g.id);});}
 function initLocalVideo(p){var g=getElems(p),v=p.querySelector('video');if(!v)return;v.addEventListener('playing',function(){if(g.po){g.po.classList.add('playing');g.po.classList.remove('paused');}});v.addEventListener('pause',function(){if(g.po&&!g.ec.classList.contains('show')){g.po.classList.remove('playing');g.po.classList.add('paused');}});v.addEventListener('timeupdate',function(){if(v.duration)g.pf.style.width=(v.currentTime/v.duration*100)+'%';});v.addEventListener('ended',function(){g.ec.classList.add('show');g.pf.style.width='100%';if(g.po)g.po.classList.add('hidden');});function hmt(e){e.stopPropagation();if(v.muted){muteAllOthers(g.id);pauseAllOthers(g.id);v.muted=false;setMuteUI(g.mb,false);g.ec.classList.remove('show');g.pf.style.width='0%';v.currentTime=0;v.addEventListener('seeked',function onS(){v.play().catch(function(){});v.removeEventListener('seeked',onS);});}else{v.muted=true;setMuteUI(g.mb,true);}}g.mb.addEventListener('click',hmt);g.mb.addEventListener('touchend',function(e){e.preventDefault();hmt(e);});}
 var ob=new IntersectionObserver(function(es){es.forEach(function(e){var p=e.target,id=p.getAttribute('data-video-id'),ytId=p.getAttribute('data-yt-id');if(e.isIntersecting){if(ytId&&pInfo[id]&&!pInfo[id].player&&!pInfo[id].creating)preWarm(id);return;}if(ytId){var i=pInfo[id];if(i&&i.player)try{if(i.player.getPlayerState()===1)i.player.pauseVideo();}catch(ex){}}else{var v=p.querySelector('video');if(v&&!v.paused)v.pause();}});},{threshold:0.3});
 document.querySelectorAll('.mv-player').forEach(function(p){ob.observe(p);if(p.getAttribute('data-yt-id'))setupYTPlayer(p);else initLocalVideo(p);});
