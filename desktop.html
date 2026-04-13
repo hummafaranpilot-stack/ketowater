@@ -5911,18 +5911,36 @@ button:focus-visible {
         showNotification(0);
     }
 
+    /* ---------- gate: both flags must be true before firing ---------- */
+    var pageLoaded   = false;  // condition 0: page fully loaded
+    var conditionMet = false;  // condition 1 OR 2
+
+    function tryTrigger() {
+        if (pageLoaded && conditionMet) trigger();
+    }
+
+    /* ---------- condition 0: page fully loaded (required gate) ---------- */
+    window.addEventListener('load', function() {
+        pageLoaded = true;
+        tryTrigger();
+    });
+
     /* ---------- condition 2: scroll to #moneyback ---------- */
     function checkScroll() {
         var sec = document.getElementById('moneyback');
         if (!sec) return;
         if (sec.getBoundingClientRect().top <= window.innerHeight * 0.9) {
-            trigger();
+            conditionMet = true;
+            tryTrigger();
         }
     }
     window.addEventListener('scroll', checkScroll, { passive: true });
 
     /* ---------- condition 1: 15 seconds ---------- */
-    timer15 = setTimeout(trigger, 15000);
+    timer15 = setTimeout(function() {
+        conditionMet = true;
+        tryTrigger();
+    }, 15000);
 
     /* ---------- close button — 1 min cooldown ---------- */
     /* Script runs at bottom of page so DOM is already ready — bind directly */
