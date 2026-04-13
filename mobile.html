@@ -6148,17 +6148,49 @@ function dismissMobileToast(){var t=document.getElementById('mobile-toast');if(t
 (function(){var t=document.getElementById('mobile-toast');if(!t)return;window.__mtDismissedAt=0;var ah=null;window.addEventListener('scroll',function(){if(window.innerWidth>=992)return;if(window.__mtDismissedAt&&(Date.now()-window.__mtDismissedAt)<120000)return;var p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;if(p>=10&&p<50){if(t.style.display==='none'||!t.style.display){t.style.display='block';if(ah)clearTimeout(ah);ah=setTimeout(function(){t.style.display='none';window.__mtDismissedAt=Date.now();},8000);}}});})();
 function dismissDesktopToast(){var t=document.getElementById('desktop-toast');if(t)t.style.display='none';window.__dtDismissedAt=Date.now();}
 (function(){var t=document.getElementById('desktop-toast');if(!t)return;var st=Date.now();window.__dtDismissedAt=0;var ah=null;window.addEventListener('scroll',function(){if(window.innerWidth<992)return;if(window.__dtDismissedAt&&(Date.now()-window.__dtDismissedAt)<120000)return;var el=(Date.now()-st)/1000;var p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;if(el>=45&&p>=15&&p<60){var sb=document.getElementById('sticky-cta-desktop');var sv=sb&&sb.style.display==='block';if((t.style.display==='none'||!t.style.display)&&!sv){t.style.display='block';if(ah)clearTimeout(ah);ah=setTimeout(function(){t.style.display='none';window.__dtDismissedAt=Date.now();},12000);}}});})();
-/* ===== Press bar: restart animation after tab switch to prevent slow/stutter ===== */
+/* ===== Press bar: JS rAF marquee — consistent speed, never pauses on tap ===== */
 (function(){
     var track=document.querySelector('.press-track');
     if(!track)return;
-    document.addEventListener('visibilitychange',function(){
-        if(!document.hidden){
-            track.style.animation='none';
-            void track.offsetWidth;
-            track.style.animation='';
+
+    /* Kill CSS animation entirely — JS takes over */
+    track.style.animation='none';
+    track.style.willChange='transform';
+    track.style.pointerEvents='none'; /* block any touch interaction */
+
+    var pos=0, halfW=0, raf, lastTs=null;
+    var PX_PER_SEC=65; /* ~22s loop for a ~1430px half-track */
+
+    function measure(){ halfW=track.scrollWidth/2; }
+
+    function tick(ts){
+        if(lastTs!==null){
+            var dt=ts-lastTs;
+            if(dt>100)dt=16; /* skip big gaps (tab was hidden) */
+            pos+=PX_PER_SEC*(dt/1000);
+            if(pos>=halfW)pos-=halfW;
+            track.style.transform='translateX(-'+pos.toFixed(2)+'px)';
         }
+        lastTs=ts;
+        raf=requestAnimationFrame(tick);
+    }
+
+    function start(){
+        measure();
+        if(halfW>0&&!raf)raf=requestAnimationFrame(tick);
+    }
+    function stop(){
+        cancelAnimationFrame(raf);
+        raf=null; lastTs=null;
+    }
+
+    document.addEventListener('visibilitychange',function(){
+        if(document.hidden)stop(); else start();
     });
+
+    /* Start after images load so scrollWidth is accurate */
+    if(document.readyState==='complete')start();
+    else window.addEventListener('load',start);
 })();
 /* ===== Video Players ===== */
 (function(){
@@ -6307,8 +6339,6 @@ function dismissDesktopToast(){var t=document.getElementById('desktop-toast');if
         var poster=player.querySelector('.mv-poster');if(poster)poster.style.display='none';
         overlay.style.display='none';
 
-        /* Enter fullscreen — native first, CSS fake fallback for iOS */
-        if(!enterFs(player))fakeFs(player);
         addShield(player,iframe);
     };
 })();
