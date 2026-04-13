@@ -6429,7 +6429,6 @@ function localVideoPlay(overlay){
 <!-- ── Exit Intent Popup ── -->
 <div id="kw-exit-overlay">
   <div id="kw-exit-popup">
-    <button id="kw-exit-close">&#10005;</button>
     <img src="Images/exit-popup.webp?v=20260413" alt="Wait! Don't Leave — Get Extra 10-30% Discount If You Stay">
   </div>
 </div>
@@ -6440,10 +6439,12 @@ function localVideoPlay(overlay){
   inset: 0;
   background: rgba(0,0,0,0.78);
   z-index: 999999;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding-top: 24px;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+  box-sizing: border-box;
 }
 #kw-exit-overlay.kw-exit-active { display: flex; }
 #kw-exit-popup {
@@ -6453,12 +6454,13 @@ function localVideoPlay(overlay){
   border-radius: 22px;
   overflow: hidden;
   border: 3px solid #AAED30;
+  transform-origin: top center;
   animation: kw-exit-in 0.38s cubic-bezier(0.34,1.56,0.64,1) forwards,
              kw-exit-glow 2.2s ease-in-out 0.38s infinite;
 }
 @keyframes kw-exit-in {
-  from { transform: scale(0.78); opacity: 0; }
-  to   { transform: scale(1);    opacity: 1; }
+  from { transform: scale(0.78) translateY(-20px); opacity: 0; }
+  to   { transform: scale(1)    translateY(0);     opacity: 1; }
 }
 @keyframes kw-exit-glow {
   0%,100% { box-shadow: 0 0 0 3px #AAED30, 0 0 18px rgba(170,237,48,0.5), 0 0 40px rgba(170,237,48,0.2); }
@@ -6466,19 +6468,6 @@ function localVideoPlay(overlay){
 }
 #kw-exit-popup img {
   width: 100%; height: auto; display: block;
-}
-#kw-exit-close {
-  position: absolute; top: 10px; right: 10px;
-  width: 30px; height: 30px;
-  background: rgba(0,0,0,0.65);
-  border: 1px solid rgba(255,255,255,0.28);
-  border-radius: 8px;
-  color: #fff;
-  font-size: 15px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 2;
-  line-height: 1;
 }
 </style>
 <script>
@@ -6488,22 +6477,29 @@ function localVideoPlay(overlay){
   var overlay = document.getElementById('kw-exit-overlay');
   if (!overlay) return;
   var shown = false;
+  var prevOverflow = '';
   function show() {
     if (shown) return;
     shown = true;
     try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e) {}
+    prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     overlay.classList.add('kw-exit-active');
   }
-  function hide() { overlay.classList.remove('kw-exit-active'); }
+  function hide() {
+    overlay.classList.remove('kw-exit-active');
+    document.body.style.overflow = prevOverflow;
+  }
   /* Mobile: tab switch / visibility change */
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) show();
   });
-  /* Close: X button */
-  var btn = document.getElementById('kw-exit-close');
-  if (btn) btn.addEventListener('click', hide);
   /* Close: backdrop click */
   overlay.addEventListener('click', function(e) { if (e.target === overlay) hide(); });
+  /* Preload image after page load */
+  window.addEventListener('load', function() {
+    var pre = new Image(); pre.src = 'Images/exit-popup.webp?v=20260413';
+  });
 })();
 </script>
 
