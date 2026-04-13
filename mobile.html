@@ -2375,8 +2375,8 @@ window.__lo_site_id = 330757;
 <!-- KetoWater Shared Features CSS -->
 <style>
 /* Notification close button */
-.custom-social-proof .custom-close { position: absolute !important; top: 4px !important; right: 4px !important; width: 22px !important; height: 22px !important; background: rgba(0,0,0,0.5) !important; border: none !important; border-radius: 50% !important; color: #fff !important; font-size: 16px !important; line-height: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; z-index: 10 !important; padding: 0 !important; opacity: 0.7 !important; transition: opacity 0.2s !important; transform: none !important; }
-.custom-social-proof .custom-close:hover { opacity: 1; }
+.custom-social-proof .custom-close { position: absolute !important; top: 8px !important; right: 8px !important; width: 26px !important; height: 26px !important; background: rgba(255,255,255,0.18) !important; border: 1px solid rgba(255,255,255,0.22) !important; border-radius: 7px !important; color: #fff !important; font-size: 15px !important; line-height: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; z-index: 10 !important; padding: 0 !important; opacity: 1 !important; transition: background 0.18s, opacity 0.18s !important; transform: none !important; }
+.custom-social-proof .custom-close:hover { background: rgba(255,255,255,0.30) !important; }
 .custom-social-proof .custom-close::before, .custom-social-proof .custom-close::after { display: none !important; content: none !important; }
 /* Moneyback section - compact on mobile */
 @media (max-width: 768px) {
@@ -5663,27 +5663,31 @@ button:focus-visible {
     max-height: none !important;
     display: block !important;
 }
-/* Close button */
+/* Close button — rounded square, visually clear */
 .custom-social-proof .custom-close {
     position: absolute !important;
-    top: 7px !important;
-    right: 10px !important;
-    color: rgba(255,255,255,0.65) !important;
+    top: 8px !important;
+    right: 8px !important;
+    width: 26px !important;
+    height: 26px !important;
+    background: rgba(255,255,255,0.18) !important;
+    border: 1px solid rgba(255,255,255,0.22) !important;
+    border-radius: 7px !important;
+    color: #fff !important;
     font-size: 15px !important;
-    background: none !important;
-    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     cursor: pointer !important;
     padding: 0 !important;
     line-height: 1 !important;
-    transition: color 0.2s !important;
+    transition: background 0.18s !important;
     transform: none !important;
     opacity: 1 !important;
-    width: auto !important;
-    height: auto !important;
 }
 .custom-social-proof .custom-close::before,
 .custom-social-proof .custom-close::after { display: none !important; content: none !important; }
-.custom-social-proof .custom-close:hover { color: #fff !important; }
+.custom-social-proof .custom-close:hover { background: rgba(255,255,255,0.30) !important; }
 /* Bottom progress bar */
 .custom-social-proof .kw-progress-bar {
     position: absolute !important;
