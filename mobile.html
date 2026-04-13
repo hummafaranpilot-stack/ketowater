@@ -2251,8 +2251,8 @@ section#ATC-section2.bg-bright .riskfree i { color: #1A1A1A !important; }
     display: flex;
     width: max-content;
     animation: press-scroll 35s linear infinite;
+    will-change: transform;
 }
-.press-track:hover { animation-play-state: paused; }
 .press-item {
     flex: 0 0 auto;
     display: flex;
@@ -2283,7 +2283,7 @@ section#ATC-section2.bg-bright .riskfree i { color: #1A1A1A !important; }
     .press-bar { padding: 6px 0; }
     .press-item { padding: 0 16px; height: 60px; }
     .press-item img { max-height: 60px; max-width: 170px; }
-    .press-track { animation-duration: 25s; }
+    .press-track { animation-duration: 22s; }
 }
 
 /* === Mobile-only product slider (above "The Prostate Paradox") === */
@@ -5475,6 +5475,13 @@ button:focus-visible {
 <link href="popup/css/style1.css" type="text/css" rel="stylesheet">
 <style>
 /* === Full override of style1.css notification layout === */
+/* Position: top-left instead of bottom-left */
+.custom-social-proof {
+    bottom: auto !important;
+    top: 16px !important;
+    left: 12px !important;
+    max-width: calc(100vw - 24px) !important;
+}
 .custom-social-proof .custom-notification {
     background: rgba(15, 15, 15, 0.58) !important;
     backdrop-filter: blur(14px) brightness(0.65) !important;
@@ -5731,15 +5738,15 @@ button:focus-visible {
 </section>
 <!-- Notification swiper animations & logic -->
 <style>
-/* Slide in from below */
+/* Slide in from top */
 @keyframes kwSlideInUp {
-    from { transform: translateY(130%); opacity: 0; }
-    to   { transform: translateY(0);    opacity: 1; }
+    from { transform: translateY(-120%); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
 }
-/* Slide out to below */
+/* Slide out to top */
 @keyframes kwSlideOutDown {
-    from { transform: translateY(0);    opacity: 1; }
-    to   { transform: translateY(130%); opacity: 0; }
+    from { transform: translateY(0);     opacity: 1; }
+    to   { transform: translateY(-120%); opacity: 0; }
 }
 /* Progress bar fill left → right */
 @keyframes kwProgressFill {
@@ -6147,6 +6154,18 @@ function dismissMobileToast(){var t=document.getElementById('mobile-toast');if(t
 (function(){var t=document.getElementById('mobile-toast');if(!t)return;window.__mtDismissedAt=0;var ah=null;window.addEventListener('scroll',function(){if(window.innerWidth>=992)return;if(window.__mtDismissedAt&&(Date.now()-window.__mtDismissedAt)<120000)return;var p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;if(p>=10&&p<50){if(t.style.display==='none'||!t.style.display){t.style.display='block';if(ah)clearTimeout(ah);ah=setTimeout(function(){t.style.display='none';window.__mtDismissedAt=Date.now();},8000);}}});})();
 function dismissDesktopToast(){var t=document.getElementById('desktop-toast');if(t)t.style.display='none';window.__dtDismissedAt=Date.now();}
 (function(){var t=document.getElementById('desktop-toast');if(!t)return;var st=Date.now();window.__dtDismissedAt=0;var ah=null;window.addEventListener('scroll',function(){if(window.innerWidth<992)return;if(window.__dtDismissedAt&&(Date.now()-window.__dtDismissedAt)<120000)return;var el=(Date.now()-st)/1000;var p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;if(el>=45&&p>=15&&p<60){var sb=document.getElementById('sticky-cta-desktop');var sv=sb&&sb.style.display==='block';if((t.style.display==='none'||!t.style.display)&&!sv){t.style.display='block';if(ah)clearTimeout(ah);ah=setTimeout(function(){t.style.display='none';window.__dtDismissedAt=Date.now();},12000);}}});})();
+/* ===== Press bar: restart animation after tab switch to prevent slow/stutter ===== */
+(function(){
+    var track=document.querySelector('.press-track');
+    if(!track)return;
+    document.addEventListener('visibilitychange',function(){
+        if(!document.hidden){
+            track.style.animation='none';
+            void track.offsetWidth;
+            track.style.animation='';
+        }
+    });
+})();
 /* ===== Video Players ===== */
 function ytFacadeHover(overlay){
     var player=overlay.closest('.mv-player');
@@ -6164,41 +6183,19 @@ function ytFacadePlay(overlay){
     var player=overlay.closest('.mv-player');
     var ytId=player.getAttribute('data-yt-id');
     if(!ytId)return;
-    var iframe=player.querySelector('iframe');
-    if(iframe){
-        iframe.style.visibility='visible';
-        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*');
-        setTimeout(function(){iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*');},600);
-    } else {
-        iframe=document.createElement('iframe');
-        iframe.src='https://www.youtube-nocookie.com/embed/'+ytId+'?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&cc_load_policy=0&enablejsapi=1';
-        iframe.allow='autoplay; encrypted-media; picture-in-picture';
-        iframe.allowFullscreen=true;
-        iframe.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;border:none;';
-        player.appendChild(iframe);
-    }
+    /* Remove any hover-preloaded iframe and rebuild with autoplay=1.
+       This click IS the user gesture, so autoplay is always permitted. */
+    var existing=player.querySelector('iframe');
+    if(existing)existing.remove();
+    var iframe=document.createElement('iframe');
+    iframe.src='https://www.youtube-nocookie.com/embed/'+ytId+'?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&cc_load_policy=0';
+    iframe.allow='autoplay; encrypted-media; picture-in-picture';
+    iframe.allowFullscreen=true;
+    iframe.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;border:none;';
+    player.appendChild(iframe);
     var poster=player.querySelector('.mv-poster');
     if(poster)poster.style.display='none';
     overlay.style.display='none';
-    var shield=document.createElement('div');
-    shield.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;cursor:pointer;';
-    shield.setAttribute('data-playing','1');
-    var pauseIcon=document.createElement('div');
-    pauseIcon.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;pointer-events:none;';
-    pauseIcon.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="white" style="margin-left:3px"><polygon points="5,3 19,12 5,21"/></svg>';
-    shield.appendChild(pauseIcon);
-    shield.onclick=function(){
-        if(shield.getAttribute('data-playing')==='1'){
-            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*');
-            shield.setAttribute('data-playing','0');
-            pauseIcon.style.display='flex';
-        } else {
-            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*');
-            shield.setAttribute('data-playing','1');
-            pauseIcon.style.display='none';
-        }
-    };
-    player.appendChild(shield);
 }
 function localVideoPlay(overlay){
     var player=overlay.closest('.mv-player');

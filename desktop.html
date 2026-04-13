@@ -6141,41 +6141,19 @@ function ytFacadePlay(overlay){
     var player=overlay.closest('.mv-player');
     var ytId=player.getAttribute('data-yt-id');
     if(!ytId)return;
-    var iframe=player.querySelector('iframe');
-    if(iframe){
-        iframe.style.visibility='visible';
-        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*');
-        setTimeout(function(){iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*');},600);
-    } else {
-        iframe=document.createElement('iframe');
-        iframe.src='https://www.youtube-nocookie.com/embed/'+ytId+'?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&cc_load_policy=0&enablejsapi=1';
-        iframe.allow='autoplay; encrypted-media; picture-in-picture';
-        iframe.allowFullscreen=true;
-        iframe.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;border:none;';
-        player.appendChild(iframe);
-    }
+    /* Remove any hover-preloaded iframe and rebuild with autoplay=1.
+       This click IS the user gesture, so autoplay is always permitted. */
+    var existing=player.querySelector('iframe');
+    if(existing)existing.remove();
+    var iframe=document.createElement('iframe');
+    iframe.src='https://www.youtube-nocookie.com/embed/'+ytId+'?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&cc_load_policy=0';
+    iframe.allow='autoplay; encrypted-media; picture-in-picture';
+    iframe.allowFullscreen=true;
+    iframe.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;border:none;';
+    player.appendChild(iframe);
     var poster=player.querySelector('.mv-poster');
     if(poster)poster.style.display='none';
     overlay.style.display='none';
-    var shield=document.createElement('div');
-    shield.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;cursor:pointer;';
-    shield.setAttribute('data-playing','1');
-    var pauseIcon=document.createElement('div');
-    pauseIcon.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;pointer-events:none;';
-    pauseIcon.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="white" style="margin-left:3px"><polygon points="5,3 19,12 5,21"/></svg>';
-    shield.appendChild(pauseIcon);
-    shield.onclick=function(){
-        if(shield.getAttribute('data-playing')==='1'){
-            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*');
-            shield.setAttribute('data-playing','0');
-            pauseIcon.style.display='flex';
-        } else {
-            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*');
-            shield.setAttribute('data-playing','1');
-            pauseIcon.style.display='none';
-        }
-    };
-    player.appendChild(shield);
 }
 function localVideoPlay(overlay){
     var player=overlay.closest('.mv-player');
