@@ -2374,8 +2374,8 @@ window.__lo_site_id = 330757;
 
 <!-- KetoWater Shared Features CSS -->
 <style>
-/* Notification close button */
-.custom-social-proof .custom-close { position: absolute !important; top: 8px !important; right: 8px !important; width: 26px !important; height: 26px !important; background: rgba(255,255,255,0.18) !important; border: 1px solid rgba(255,255,255,0.22) !important; border-radius: 7px !important; color: #fff !important; font-size: 15px !important; line-height: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; z-index: 10 !important; padding: 0 !important; opacity: 1 !important; transition: background 0.18s, opacity 0.18s !important; transform: none !important; }
+/* Notification close button — top-LEFT of card */
+.custom-social-proof .custom-close { position: absolute !important; top: 8px !important; left: 8px !important; right: auto !important; width: 26px !important; height: 26px !important; background: rgba(255,255,255,0.18) !important; border: 1px solid rgba(255,255,255,0.22) !important; border-radius: 7px !important; color: #fff !important; font-size: 15px !important; line-height: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; z-index: 10 !important; padding: 0 !important; opacity: 1 !important; transition: background 0.18s, opacity 0.18s !important; transform: none !important; }
 .custom-social-proof .custom-close:hover { background: rgba(255,255,255,0.30) !important; }
 .custom-social-proof .custom-close::before, .custom-social-proof .custom-close::after { display: none !important; content: none !important; }
 /* Moneyback section - compact on mobile */
@@ -5475,13 +5475,6 @@ button:focus-visible {
 <link href="popup/css/style1.css" type="text/css" rel="stylesheet">
 <style>
 /* === Full override of style1.css notification layout === */
-/* Position: top-left instead of bottom-left */
-.custom-social-proof {
-    bottom: auto !important;
-    top: 16px !important;
-    left: 12px !important;
-    max-width: calc(100vw - 24px) !important;
-}
 .custom-social-proof .custom-notification {
     background: rgba(15, 15, 15, 0.58) !important;
     backdrop-filter: blur(14px) brightness(0.65) !important;
@@ -5670,11 +5663,12 @@ button:focus-visible {
     max-height: none !important;
     display: block !important;
 }
-/* Close button — rounded square, visually clear */
+/* Close button — rounded square, top-left of card */
 .custom-social-proof .custom-close {
     position: absolute !important;
     top: 8px !important;
-    right: 8px !important;
+    left: 8px !important;
+    right: auto !important;
     width: 26px !important;
     height: 26px !important;
     background: rgba(255,255,255,0.18) !important;
@@ -5738,15 +5732,15 @@ button:focus-visible {
 </section>
 <!-- Notification swiper animations & logic -->
 <style>
-/* Slide in from top */
+/* Slide in from below */
 @keyframes kwSlideInUp {
-    from { transform: translateY(-120%); opacity: 0; }
-    to   { transform: translateY(0);     opacity: 1; }
+    from { transform: translateY(130%); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
 }
-/* Slide out to top */
+/* Slide out to below */
 @keyframes kwSlideOutDown {
-    from { transform: translateY(0);     opacity: 1; }
-    to   { transform: translateY(-120%); opacity: 0; }
+    from { transform: translateY(0);    opacity: 1; }
+    to   { transform: translateY(130%); opacity: 0; }
 }
 /* Progress bar fill left → right */
 @keyframes kwProgressFill {
