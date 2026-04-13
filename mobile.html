@@ -6494,8 +6494,8 @@ function localVideoPlay(overlay){
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) show();
   });
-  /* Close: backdrop click */
-  overlay.addEventListener('click', function(e) { if (e.target === overlay) hide(); });
+  /* Close: click anywhere (banner or backdrop) */
+  overlay.addEventListener('click', hide);
   /* Preload image after page load */
   window.addEventListener('load', function() {
     var pre = new Image(); pre.src = 'Images/exit-popup.webp?v=20260413';
