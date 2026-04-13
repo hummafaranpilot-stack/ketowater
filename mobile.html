@@ -2373,7 +2373,8 @@ window.__lo_site_id = 330757;
 /* Intimacy image smaller on mobile */
 @media (max-width: 768px) { img.pxp-intimacy-img { max-width: 200px !important; width: 200px !important; margin-top: 0.5rem !important; margin-bottom: 0.5rem !important; } }
 /* Fix horizontal overflow */
-html, body { overflow-x: hidden; scroll-behavior: smooth; }
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }
 /* Product Image Gallery - Amazon style */
 .pxp-gallery { display: flex; gap: 10px; width: 100%; margin: 0; height: 100%; }
 .pxp-gallery-thumbs { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; width: 140px; }
