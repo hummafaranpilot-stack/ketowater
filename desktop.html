@@ -5,6 +5,13 @@
 	<link rel="icon" type="image/png" href="favicon.png">
 	<!-- Preload above-the-fold hero images -->
 	<link rel="preload" as="image" href="product_images/hero-bg.webp" fetchpriority="high">
+<style>
+/* ── Skeleton Loader ── */
+#kw-sk{position:fixed;inset:0;z-index:10000;background:#090a0c;overflow:hidden;transition:opacity .45s ease}
+#kw-sk.kw-sk-out{opacity:0;pointer-events:none}
+.kw-sk-s{background:linear-gradient(90deg,#14141c 25%,#1e1e2c 50%,#14141c 75%);background-size:400% 100%;animation:kw-skshimmer 1.5s ease-in-out infinite;border-radius:6px}
+@keyframes kw-skshimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+</style>
 
 
 
@@ -3238,6 +3245,84 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 </style>
 
 <body>
+
+<!-- ── Skeleton Loader ── -->
+<div id="kw-sk" aria-hidden="true" role="presentation">
+  <!-- Nav bar: logo left + links right -->
+  <div style="height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid #1a1a24">
+    <div class="kw-sk-s" style="width:120px;height:44px;border-radius:8px"></div>
+    <div style="display:flex;gap:20px">
+      <div class="kw-sk-s" style="width:80px;height:18px"></div>
+      <div class="kw-sk-s" style="width:80px;height:18px"></div>
+      <div class="kw-sk-s" style="width:100px;height:18px"></div>
+      <div class="kw-sk-s" style="width:120px;height:36px;border-radius:20px"></div>
+    </div>
+  </div>
+  <!-- Hero: text left + product image right -->
+  <div style="display:flex;height:480px;gap:0">
+    <!-- Left: text + CTA -->
+    <div style="flex:1;padding:48px 48px 40px;display:flex;flex-direction:column;gap:14px">
+      <div class="kw-sk-s" style="height:16px;width:40%"></div>
+      <div class="kw-sk-s" style="height:42px;width:92%"></div>
+      <div class="kw-sk-s" style="height:34px;width:80%"></div>
+      <div class="kw-sk-s" style="height:20px;width:65%"></div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <div class="kw-sk-s" style="width:130px;height:20px"></div>
+        <div class="kw-sk-s" style="width:90px;height:20px"></div>
+      </div>
+      <div class="kw-sk-s" style="height:58px;width:72%;border-radius:32px;margin-top:8px"></div>
+      <div class="kw-sk-s" style="height:14px;width:50%"></div>
+    </div>
+    <!-- Right: product image placeholder -->
+    <div style="flex:1;position:relative">
+      <div class="kw-sk-s" style="position:absolute;inset:0;border-radius:0"></div>
+    </div>
+  </div>
+  <!-- Press bar -->
+  <div class="kw-sk-s" style="height:62px;width:100%;border-radius:0;margin-bottom:20px"></div>
+  <!-- Product gallery section: thumbs + main image | product details -->
+  <div style="display:flex;gap:24px;padding:0 48px 24px;max-width:1280px;margin:0 auto">
+    <!-- Thumb column -->
+    <div style="display:flex;flex-direction:column;gap:8px;width:90px">
+      <div class="kw-sk-s" style="height:90px;border-radius:8px"></div>
+      <div class="kw-sk-s" style="height:90px;border-radius:8px"></div>
+      <div class="kw-sk-s" style="height:90px;border-radius:8px"></div>
+      <div class="kw-sk-s" style="height:90px;border-radius:8px"></div>
+    </div>
+    <!-- Main image -->
+    <div class="kw-sk-s" style="width:380px;height:380px;border-radius:14px;flex-shrink:0"></div>
+    <!-- Product info -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px;padding-top:8px">
+      <div class="kw-sk-s" style="height:28px;width:70%"></div>
+      <div class="kw-sk-s" style="height:20px;width:50%"></div>
+      <div class="kw-sk-s" style="height:16px;width:90%"></div>
+      <div class="kw-sk-s" style="height:16px;width:80%"></div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <div class="kw-sk-s" style="flex:1;height:100px;border-radius:12px"></div>
+        <div class="kw-sk-s" style="flex:1;height:100px;border-radius:12px"></div>
+        <div class="kw-sk-s" style="flex:1;height:100px;border-radius:12px"></div>
+      </div>
+      <div class="kw-sk-s" style="height:54px;width:80%;border-radius:32px;margin-top:6px"></div>
+    </div>
+  </div>
+  <!-- Video section -->
+  <div style="padding:0 48px 24px;max-width:1280px;margin:0 auto">
+    <div class="kw-sk-s" style="height:240px;width:100%;border-radius:14px"></div>
+  </div>
+  <!-- Content rows -->
+  <div style="padding:0 48px;max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:10px">
+    <div class="kw-sk-s" style="height:26px;width:35%"></div>
+    <div class="kw-sk-s" style="height:16px;width:100%"></div>
+    <div class="kw-sk-s" style="height:16px;width:88%"></div>
+    <div class="kw-sk-s" style="height:16px;width:72%"></div>
+    <div style="display:flex;gap:16px;margin-top:8px">
+      <div class="kw-sk-s" style="flex:1;height:120px;border-radius:12px"></div>
+      <div class="kw-sk-s" style="flex:1;height:120px;border-radius:12px"></div>
+      <div class="kw-sk-s" style="flex:1;height:120px;border-radius:12px"></div>
+      <div class="kw-sk-s" style="flex:1;height:120px;border-radius:12px"></div>
+    </div>
+  </div>
+</div>
 <main>
 	<!-- Page Content -->
 
@@ -6095,6 +6180,27 @@ function localVideoPlay(overlay){
     v.muted=false;
     v.play().catch(function(){v.muted=true;v.play();});
 }
+</script>
+
+<script>
+/* ── Skeleton dismiss ── */
+(function(){
+  var sk=document.getElementById('kw-sk');
+  if(!sk)return;
+  var done=false;
+  function dismiss(){
+    if(done)return; done=true;
+    sk.classList.add('kw-sk-out');
+    setTimeout(function(){if(sk.parentNode)sk.parentNode.removeChild(sk);},500);
+  }
+  var loaded=0, needed=2;
+  function tick(){if(++loaded>=needed)dismiss();}
+  /* Track hero bg + first video poster */
+  var a=new Image(); a.onload=a.onerror=tick; a.src='product_images/hero-bg.webp';
+  var b=new Image(); b.onload=b.onerror=tick; b.src='video_clips/posters/hook.webp';
+  /* Hard fallback: 4s max */
+  setTimeout(dismiss,4000);
+})();
 </script>
 
 </body>
