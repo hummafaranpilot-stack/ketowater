@@ -3374,7 +3374,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 <div class="mv-player" data-video-id="kw-hook" data-yt-id="e4nma1QXYgM">
     <span class="mv-badge">WATCH THIS FIRST</span>
     <img class="mv-poster" src="video_clips/posters/hook.webp" alt="">
-    <div class="mv-play-overlay" onclick="ytFacadePlay(this)">
+    <div class="mv-play-overlay" onclick="ytFacadePlay(this)" onmouseenter="ytFacadeHover(this)">
         <div class="mv-play-btn">
             <svg class="mv-play-icon" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>
         </div>
@@ -3438,7 +3438,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 <div class="mv-player" data-video-id="kw-fat" data-yt-id="JY5N-taZMaA">
     <span class="mv-badge">FAT LOSS TRUTH</span>
     <img class="mv-poster" src="video_clips/posters/clip_3.webp" alt="">
-    <div class="mv-play-overlay" onclick="ytFacadePlay(this)">
+    <div class="mv-play-overlay" onclick="ytFacadePlay(this)" onmouseenter="ytFacadeHover(this)">
         <div class="mv-play-btn">
             <svg class="mv-play-icon" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>
         </div>
@@ -3486,7 +3486,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 <div class="mv-player" data-video-id="kw-bride" data-yt-id="1StKwHcDQvg">
     <span class="mv-badge">SUCCESS STORY</span>
     <img class="mv-poster" src="video_clips/posters/clip_2.webp" alt="">
-    <div class="mv-play-overlay" onclick="ytFacadePlay(this)">
+    <div class="mv-play-overlay" onclick="ytFacadePlay(this)" onmouseenter="ytFacadeHover(this)">
         <div class="mv-play-btn">
             <svg class="mv-play-icon" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>
         </div>
@@ -3931,7 +3931,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
         <div class="mv-player" data-video-id="kw-linda" data-yt-id="LVHj2LlzJe0">
             <span class="mv-badge">LINDA</span>
             <img class="mv-poster" src="video_clips/posters/testimonial_linda.webp" alt="">
-            <div class="mv-play-overlay" onclick="ytFacadePlay(this)">
+            <div class="mv-play-overlay" onclick="ytFacadePlay(this)" onmouseenter="ytFacadeHover(this)">
                 <div class="mv-play-btn">
                     <svg class="mv-play-icon" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>
                 </div>
@@ -3941,7 +3941,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
         <div class="mv-player" data-video-id="kw-patricia" data-yt-id="B1L7bX4BDR8">
             <span class="mv-badge">PATRICIA</span>
             <img class="mv-poster" src="video_clips/posters/testimonial_patricia.webp" alt="">
-            <div class="mv-play-overlay" onclick="ytFacadePlay(this)">
+            <div class="mv-play-overlay" onclick="ytFacadePlay(this)" onmouseenter="ytFacadeHover(this)">
                 <div class="mv-play-btn">
                     <svg class="mv-play-icon" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>
                 </div>
@@ -3951,7 +3951,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
         <div class="mv-player" data-video-id="kw-sean" data-yt-id="BOAYaMbFaTQ">
             <span class="mv-badge">SEAN</span>
             <img class="mv-poster" src="video_clips/posters/testimonial_sean.webp" alt="">
-            <div class="mv-play-overlay" onclick="ytFacadePlay(this)">
+            <div class="mv-play-overlay" onclick="ytFacadePlay(this)" onmouseenter="ytFacadeHover(this)">
                 <div class="mv-play-btn">
                     <svg class="mv-play-icon" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>
                 </div>
@@ -4183,7 +4183,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 <div class="mv-player" data-video-id="kw-eat" data-yt-id="YeXk76mtCR4">
     <span class="mv-badge">EAT FREELY</span>
     <img class="mv-poster" src="video_clips/posters/clip5.webp" alt="">
-    <div class="mv-play-overlay" onclick="ytFacadePlay(this)">
+    <div class="mv-play-overlay" onclick="ytFacadePlay(this)" onmouseenter="ytFacadeHover(this)">
         <div class="mv-play-btn">
             <svg class="mv-play-icon" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>
         </div>
@@ -6046,21 +6046,50 @@ function dismissMobileToast(){var t=document.getElementById('mobile-toast');if(t
 function dismissDesktopToast(){var t=document.getElementById('desktop-toast');if(t)t.style.display='none';window.__dtDismissedAt=Date.now();}
 (function(){var t=document.getElementById('desktop-toast');if(!t)return;var st=Date.now();window.__dtDismissedAt=0;var ah=null;window.addEventListener('scroll',function(){if(window.innerWidth<992)return;if(window.__dtDismissedAt&&(Date.now()-window.__dtDismissedAt)<120000)return;var el=(Date.now()-st)/1000;var p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;if(el>=45&&p>=15&&p<60){var sb=document.getElementById('sticky-cta-desktop');var sv=sb&&sb.style.display==='block';if((t.style.display==='none'||!t.style.display)&&!sv){t.style.display='block';if(ah)clearTimeout(ah);ah=setTimeout(function(){t.style.display='none';window.__dtDismissedAt=Date.now();},12000);}}});})();
 /* ===== Video Players ===== */
+function ytFacadeHover(overlay){
+    var player=overlay.closest('.mv-player');
+    if(player.querySelector('iframe'))return;
+    var ytId=player.getAttribute('data-yt-id');
+    if(!ytId)return;
+    var iframe=document.createElement('iframe');
+    iframe.src='https://www.youtube-nocookie.com/embed/'+ytId+'?autoplay=0&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&cc_load_policy=0&enablejsapi=1';
+    iframe.allow='autoplay; encrypted-media; picture-in-picture';
+    iframe.allowFullscreen=true;
+    iframe.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;border:none;visibility:hidden;';
+    player.appendChild(iframe);
+}
 function ytFacadePlay(overlay){
     var player=overlay.closest('.mv-player');
     var ytId=player.getAttribute('data-yt-id');
     if(!ytId)return;
-    var iframe=document.createElement('iframe');
-    iframe.src='https://www.youtube-nocookie.com/embed/'+ytId+'?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&cc_load_policy=0';
-    iframe.allow='autoplay; encrypted-media; picture-in-picture';
-    iframe.allowFullscreen=true;
-    iframe.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;border:none;';
+    var iframe=player.querySelector('iframe');
+    if(iframe){
+        iframe.style.visibility='visible';
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*');
+        setTimeout(function(){iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*');},600);
+    } else {
+        iframe=document.createElement('iframe');
+        iframe.src='https://www.youtube-nocookie.com/embed/'+ytId+'?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&cc_load_policy=0&enablejsapi=1';
+        iframe.allow='autoplay; encrypted-media; picture-in-picture';
+        iframe.allowFullscreen=true;
+        iframe.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;border:none;';
+        player.appendChild(iframe);
+    }
     var poster=player.querySelector('.mv-poster');
     if(poster)poster.style.display='none';
     overlay.style.display='none';
-    player.appendChild(iframe);
     var shield=document.createElement('div');
-    shield.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;';
+    shield.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;cursor:pointer;';
+    shield.setAttribute('data-playing','1');
+    shield.onclick=function(){
+        if(shield.getAttribute('data-playing')==='1'){
+            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*');
+            shield.setAttribute('data-playing','0');
+        } else {
+            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*');
+            shield.setAttribute('data-playing','1');
+        }
+    };
     player.appendChild(shield);
 }
 function localVideoPlay(overlay){
