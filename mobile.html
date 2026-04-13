@@ -5934,53 +5934,57 @@ button:focus-visible {
             triggered = true;
         }
 
+        var HOLD_OPACITY = 0.82; /* dim level on hold */
+
         function flingOut(dx, dy) {
             saveCooldown();
-            /* direction: fly further than screen edge + slight rotation */
             var rotation = dx * 0.18;
             var tx = dx > 0 ? '160%' : (dx < 0 ? '-160%' : '0');
             var ty = dy > 0 && Math.abs(dy) > Math.abs(dx) ? '160%' : '0';
-            /* quick snappy exit: translate + scale down slightly + fade */
-            card.style.transition = 'transform 0.3s cubic-bezier(0.6,0,1,0.6), opacity 0.25s ease';
-            card.style.transform  = 'translateX(' + tx + ') translateY(' + ty + ') rotate(' + rotation + 'deg) scale(0.85)';
-            card.style.opacity    = '0';
+            /* force reflow so browser registers current drag position as "from" */
+            void card.offsetWidth;
+            card.style.transition = 'transform 0.32s cubic-bezier(0.5,0,0.85,0.5), opacity 0.26s ease';
+            /* rAF ensures transition fires AFTER reflow, not batched with it */
+            requestAnimationFrame(function() {
+                card.style.transform = 'translateX(' + tx + ') translateY(' + ty + ') rotate(' + rotation + 'deg) scale(0.85)';
+                card.style.opacity   = '0';
+            });
             setTimeout(function() {
                 section.style.display = 'none';
-                card.style.cssText    = ''; /* reset inline styles */
-            }, 350);
+                card.style.cssText    = '';
+            }, 380);
         }
 
         function snapBack() {
-            /* spring back with a little bounce */
             card.style.transition = 'transform 0.38s cubic-bezier(0.34,1.56,0.64,1), opacity 0.22s ease';
             card.style.transform  = '';
-            card.style.opacity    = '';
+            card.style.opacity    = '1';
             resumeProgress();
         }
 
-        /* touch hold: dim card + pause progress bar */
+        /* touch hold: dim card + pause progress bar — no transition so drag starts clean */
         card.addEventListener('touchstart', function(e) {
             var t = e.touches[0];
             sx = t.clientX; sy = t.clientY; st = Date.now();
             dragging = true;
-            card.style.transition = 'opacity 0.15s ease';
-            card.style.opacity    = '0.72'; /* dim on hold */
+            card.style.transition = 'none';
+            card.style.opacity    = String(HOLD_OPACITY);
             pauseProgress();
         }, { passive: true });
 
-        /* drag: follow finger, rotate + fade by distance */
+        /* drag: follow finger — opacity continues FROM hold dim, fades further with distance */
         card.addEventListener('touchmove', function(e) {
             if (!dragging) return;
             var t  = e.touches[0];
             var dx = t.clientX - sx;
             var dy = t.clientY - sy;
-            /* only allow downward or sideways, not upward */
             var clampedDy = Math.max(0, dy);
             var rot  = dx * 0.10;
             var dist = Math.sqrt(dx * dx + clampedDy * clampedDy);
             card.style.transition = 'none';
             card.style.transform  = 'translateX(' + dx + 'px) translateY(' + clampedDy + 'px) rotate(' + rot + 'deg)';
-            card.style.opacity    = Math.max(0.15, 1 - dist / 180);
+            /* fade FROM hold opacity downward — no jump back to 1 */
+            card.style.opacity    = String(Math.max(0.1, HOLD_OPACITY - dist / 200));
         }, { passive: true });
 
         /* release: fling or snap back */
