@@ -2970,7 +2970,6 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
   cursor: pointer;
   line-height: 0;
   transition: transform 0.25s ease, filter 0.25s ease;
-  animation: kw-btn-glow 2.2s ease-in-out infinite;
 }
 .mt-buy-now-btn img {
   display: block !important;
@@ -2978,6 +2977,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
   height: auto;
   border-radius: 8px;
   position: relative;
+  animation: kw-btn-glow 2.2s ease-in-out infinite;
   z-index: 1;
   transition: transform 0.25s ease, filter 0.25s ease;
 }
@@ -6363,7 +6363,7 @@ function localVideoPlay(overlay){
   50%     { box-shadow: 0 0 28px rgba(220,30,30,1),   0 0 55px rgba(220,30,30,0.5); }
 }
 #kw-exit-popup img {
-  width: 100%; height: auto; display: block;
+  width: 100%; height: auto; display: block; cursor: pointer;
 }
 </style>
 <script>
