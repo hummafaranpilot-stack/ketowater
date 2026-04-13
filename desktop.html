@@ -6315,5 +6315,90 @@ function localVideoPlay(overlay){
 })();
 </script>
 
+<!-- ── Exit Intent Popup ── -->
+<div id="kw-exit-overlay">
+  <div id="kw-exit-popup">
+    <button id="kw-exit-close">&#10005;</button>
+    <img src="Images/exit-popup.webp?v=20260413" alt="Wait! Don't Leave — Get Extra 10-30% Discount If You Stay">
+  </div>
+</div>
+<style>
+#kw-exit-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  z-index: 999999;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+#kw-exit-overlay.kw-exit-active { display: flex; }
+#kw-exit-popup {
+  position: relative;
+  max-width: 640px;
+  width: 80%;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 3px solid #AAED30;
+  animation: kw-exit-in 0.38s cubic-bezier(0.34,1.56,0.64,1) forwards,
+             kw-exit-glow 2.2s ease-in-out 0.38s infinite;
+}
+@keyframes kw-exit-in {
+  from { transform: scale(0.78); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+@keyframes kw-exit-glow {
+  0%,100% { box-shadow: 0 0 0 3px #AAED30, 0 0 18px rgba(170,237,48,0.5), 0 0 40px rgba(170,237,48,0.2); }
+  50%     { box-shadow: 0 0 0 3px #AAED30, 0 0 38px rgba(170,237,48,1),   0 0 72px rgba(170,237,48,0.55); }
+}
+#kw-exit-popup img {
+  width: 100%; height: auto; display: block;
+}
+#kw-exit-close {
+  position: absolute; top: 10px; right: 10px;
+  width: 30px; height: 30px;
+  background: rgba(0,0,0,0.65);
+  border: 1px solid rgba(255,255,255,0.28);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+  line-height: 1;
+}
+</style>
+<script>
+(function(){
+  var SESSION_KEY = 'kw_exit_shown';
+  try { if (sessionStorage.getItem(SESSION_KEY)) return; } catch(e) {}
+  var overlay = document.getElementById('kw-exit-overlay');
+  if (!overlay) return;
+  var shown = false;
+  function show() {
+    if (shown) return;
+    shown = true;
+    try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e) {}
+    overlay.classList.add('kw-exit-active');
+  }
+  function hide() { overlay.classList.remove('kw-exit-active'); }
+  /* Desktop: mouse exits toward top of screen (going to tabs/address bar) */
+  document.addEventListener('mouseleave', function(e) {
+    if (e.clientY <= 5) show();
+  });
+  /* Tab switch / visibility change */
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) show();
+  });
+  /* Close: X button */
+  var btn = document.getElementById('kw-exit-close');
+  if (btn) btn.addEventListener('click', hide);
+  /* Close: backdrop click */
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) hide(); });
+})();
+</script>
+
 </body>
 </html>
