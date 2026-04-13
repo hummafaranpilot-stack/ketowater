@@ -4,25 +4,12 @@
 <head>
 	<link rel="icon" type="image/png" href="favicon.png">
 	<!-- Preload above-the-fold hero images -->
-	<link rel="preload" as="image" href="product_images/hero-bg-mobile.webp" fetchpriority="high">
-<style>
-/* ── Skeleton Loader ── */
-#kw-sk{position:fixed;inset:0;z-index:10000;background:#090a0c;overflow:hidden;transition:opacity .45s ease}
-#kw-sk.kw-sk-out{opacity:0;pointer-events:none}
-.kw-sk-s{background:linear-gradient(90deg,#14141c 25%,#1e1e2c 50%,#14141c 75%);background-size:400% 100%;animation:kw-skshimmer 1.5s ease-in-out infinite;border-radius:6px}
-@keyframes kw-skshimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
-</style>
+	<link rel="preload" as="image" href="product_images/hero-bg.webp" media="(min-width: 769px)">
+	<link rel="preload" as="image" href="product_images/hero-bg-mobile.webp" media="(max-width: 768px)">
 
 
 
 
-<script>
-(function(){
-  var ua=navigator.userAgent;
-  if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)&&window.innerWidth>768)
-    window.location.replace('desktop.html');
-})();
-</script>
 <script type="text/javascript">
     function hideGreyHead() {
       var el=document.getElementById("greyhead"); if(el) el.style.display = "none";
@@ -50,7 +37,7 @@
 <link href="short/css/skeleton.min.css" rel="stylesheet">
 <link href="short/css/main.min.css" rel="stylesheet">
 <!-- Google Fonts — self-hosted, same origin (no external round-trip) -->
-<link href="Fonts/fonts.css" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="Fonts/fonts.css" rel="stylesheet"></noscript>
+<link href="Fonts/fonts.css" rel="stylesheet">
 <!-- Font Awesome — sync (prevents desktop CLS 0.506) -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
@@ -70,7 +57,7 @@
     pointer-events: none;
 }
 /* Show desktop bg by default; mobile bg is hidden until media query swaps them */
-.hero-bg-mobile { display: block; }
+.hero-bg-mobile { display: none; }
 .hero::before {
     content: '';
     position: absolute;
@@ -389,7 +376,6 @@
     width: 40%;
     min-width: 360px;
     max-width: 760px;
-    padding-top: 12px;
 }
 .hero-cta .button-center.riskfree {
     padding: 0.55em 1.2em;
@@ -1102,6 +1088,7 @@ section#prod-description .check-list li::marker { color: #6FB81C !important; }
     bottom: -18px;
     pointer-events: none;
     z-index: 3;
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
 }
 .kw-routine-deco--matcha {
     right: -20px;
@@ -2287,10 +2274,7 @@ section#ATC-section2.bg-bright .riskfree i { color: #1A1A1A !important; }
 }
 
 /* === Mobile-only product slider (above "The Prostate Paradox") === */
-.mob-slider {
-    display: block;
-    margin: 24px 12px 28px 12px;
-}
+.mob-slider { display: none; }
 @media (max-width: 900px) {
     .mob-slider {
         display: block;
@@ -3250,61 +3234,6 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 </style>
 
 <body>
-
-<!-- ── Skeleton Loader ── -->
-<div id="kw-sk" aria-hidden="true" role="presentation">
-  <!-- Nav / Logo -->
-  <div style="height:70px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #1a1a24">
-    <div class="kw-sk-s" style="width:110px;height:42px;border-radius:8px"></div>
-  </div>
-  <!-- Hero image block -->
-  <div class="kw-sk-s" style="width:100%;height:200px;border-radius:0"></div>
-  <!-- Hero text + CTA -->
-  <div style="padding:18px 20px 0">
-    <div class="kw-sk-s" style="height:14px;width:55%;margin-bottom:12px"></div>
-    <div class="kw-sk-s" style="height:30px;width:95%;margin-bottom:8px"></div>
-    <div class="kw-sk-s" style="height:24px;width:80%;margin-bottom:6px"></div>
-    <div class="kw-sk-s" style="height:20px;width:65%;margin-bottom:20px"></div>
-    <!-- Stars row -->
-    <div style="display:flex;gap:6px;margin-bottom:14px">
-      <div class="kw-sk-s" style="width:120px;height:18px"></div>
-      <div class="kw-sk-s" style="width:80px;height:18px"></div>
-    </div>
-    <!-- CTA Button -->
-    <div class="kw-sk-s" style="height:58px;width:100%;border-radius:32px;margin-bottom:10px"></div>
-    <div class="kw-sk-s" style="height:14px;width:60%;margin:0 auto 18px"></div>
-  </div>
-  <!-- Press bar -->
-  <div class="kw-sk-s" style="height:60px;width:100%;border-radius:0;margin-bottom:16px"></div>
-  <!-- Product slider -->
-  <div style="padding:0 16px 16px">
-    <div class="kw-sk-s" style="width:100%;height:260px;border-radius:14px;margin-bottom:10px"></div>
-    <div style="display:flex;gap:8px">
-      <div class="kw-sk-s" style="flex:1;height:64px;border-radius:8px"></div>
-      <div class="kw-sk-s" style="flex:1;height:64px;border-radius:8px"></div>
-      <div class="kw-sk-s" style="flex:1;height:64px;border-radius:8px"></div>
-      <div class="kw-sk-s" style="flex:1;height:64px;border-radius:8px"></div>
-    </div>
-  </div>
-  <!-- Video placeholder -->
-  <div class="kw-sk-s" style="height:210px;width:100%;border-radius:0;margin-bottom:16px"></div>
-  <!-- Content rows -->
-  <div style="padding:0 20px 16px">
-    <div class="kw-sk-s" style="height:22px;width:50%;margin-bottom:14px"></div>
-    <div class="kw-sk-s" style="height:14px;width:100%;margin-bottom:8px"></div>
-    <div class="kw-sk-s" style="height:14px;width:90%;margin-bottom:8px"></div>
-    <div class="kw-sk-s" style="height:14px;width:75%;margin-bottom:20px"></div>
-    <!-- Icon row -->
-    <div style="display:flex;gap:12px;margin-bottom:16px">
-      <div class="kw-sk-s" style="width:48px;height:48px;border-radius:50%"></div>
-      <div class="kw-sk-s" style="width:48px;height:48px;border-radius:50%"></div>
-      <div class="kw-sk-s" style="width:48px;height:48px;border-radius:50%"></div>
-      <div class="kw-sk-s" style="width:48px;height:48px;border-radius:50%"></div>
-    </div>
-    <div class="kw-sk-s" style="height:14px;width:100%;margin-bottom:8px"></div>
-    <div class="kw-sk-s" style="height:14px;width:85%"></div>
-  </div>
-</div>
 <main>
 	<!-- Page Content -->
 
@@ -3325,6 +3254,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 	<div class="hero">
 
 		<!-- Real image so the hero auto-sizes to its natural aspect ratio -->
+		<img src="product_images/hero-bg.webp" alt="" class="hero-bg-img hero-bg-desktop" fetchpriority="high">
 		<img src="product_images/hero-bg-mobile.webp" alt="" class="hero-bg-img hero-bg-mobile" fetchpriority="high">
 
 		<div class="hero-logo">
@@ -6180,27 +6110,6 @@ function localVideoPlay(overlay){
     v.muted=false;
     v.play().catch(function(){v.muted=true;v.play();});
 }
-</script>
-
-<script>
-/* ── Skeleton dismiss ── */
-(function(){
-  var sk=document.getElementById('kw-sk');
-  if(!sk)return;
-  var done=false;
-  function dismiss(){
-    if(done)return; done=true;
-    sk.classList.add('kw-sk-out');
-    setTimeout(function(){if(sk.parentNode)sk.parentNode.removeChild(sk);},500);
-  }
-  var loaded=0, needed=2;
-  function tick(){if(++loaded>=needed)dismiss();}
-  /* Track hero bg + first video poster */
-  var a=new Image(); a.onload=a.onerror=tick; a.src='product_images/hero-bg-mobile.webp';
-  var b=new Image(); b.onload=b.onerror=tick; b.src='video_clips/posters/hook.webp';
-  /* Hard fallback: 4 s max */
-  setTimeout(dismiss,4000);
-})();
 </script>
 
 </body>
