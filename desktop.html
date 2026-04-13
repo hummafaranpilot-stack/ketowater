@@ -6361,8 +6361,6 @@ function localVideoPlay(overlay){
 </style>
 <script>
 (function(){
-  var SESSION_KEY = 'kw_exit_shown';
-  try { if (sessionStorage.getItem(SESSION_KEY)) return; } catch(e) {}
   var overlay = document.getElementById('kw-exit-overlay');
   if (!overlay) return;
   var shown = false;
@@ -6370,7 +6368,6 @@ function localVideoPlay(overlay){
   function show() {
     if (shown) return;
     shown = true;
-    try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e) {}
     prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     overlay.classList.add('kw-exit-active');
@@ -6379,11 +6376,11 @@ function localVideoPlay(overlay){
     overlay.classList.remove('kw-exit-active');
     document.body.style.overflow = prevOverflow;
   }
-  /* Desktop: mouse exits toward top of screen (going to tabs/address bar) */
+  /* Mouse toward top (tab bar / address bar) */
   document.addEventListener('mouseleave', function(e) {
     if (e.clientY <= 5) show();
   });
-  /* Tab switch / visibility change */
+  /* Tab switch */
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) show();
   });
