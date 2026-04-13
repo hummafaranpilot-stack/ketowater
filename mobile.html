@@ -33,12 +33,10 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link rel="preconnect" href="https://cdn.trustednutraproduct.com">
 <!-- Critical local CSS -->
-<link href="short/css/skeleton.min.css" rel="stylesheet">
 <link href="short/css/main.min.css" rel="stylesheet">
 <!-- Google Fonts — self-hosted, same origin (no external round-trip) -->
-<link href="Fonts/fonts.css" rel="stylesheet">
+<link href="Fonts/fonts.css" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Font Awesome — sync (prevents desktop CLS 0.506) -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 <style>
 /* === KetoWater Hero (replaces former #headline + #prod-description) === */
@@ -945,8 +943,7 @@ section#prod-description .check-list li::marker { color: #6FB81C !important; }
 #prod-description .riskfree i { color: #1A1A1A !important; }
 
 /* Star rating: gold → neon green */
-#prod-description .stars i.fa-star,
-#prod-description .stars .fas.fa-star { color: #6FB81C !important; }
+#prod-description .stars svg { color: #6FB81C !important; }
 
 /* Trustpilot bar: keep stars image but recolor accents */
 #prod-description .pxp-trustpilot-bar {
@@ -2354,7 +2351,7 @@ window.__lo_site_id = 330757;
 </script> -->
 <!-- End Lucky Orange Script -->
 
-<link href="short/css/loader/loader.css" rel="stylesheet" />	<!-- Additional CSS Goes Here -->
+<link href="short/css/loader/loader.css" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" />	<!-- Additional CSS Goes Here -->
 	<link href="short/css/landerstyle.min.css" rel="stylesheet" />
 <script src="https://cdn.trustednutraproduct.com/t.js?v=ketowater-trustednutraproduct-com" async></script>
 
@@ -3256,10 +3253,10 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 	<div class="hero">
 
 		<!-- Real image so the hero auto-sizes to its natural aspect ratio -->
-		<img src="product_images/hero-bg-mobile.webp" alt="" class="hero-bg-img hero-bg-mobile" fetchpriority="high">
+		<img src="product_images/hero-bg-mobile.webp" alt="" class="hero-bg-img hero-bg-mobile" fetchpriority="high" width="1536" height="2752">
 
 		<div class="hero-logo">
-			<a href="index.html"><img src="logo.webp" alt="KetoWater"></a>
+			<a href="index.html"><img src="logo.webp" alt="KetoWater" width="1254" height="1681"></a>
 		</div>
 
 		<button class="hero-nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.hero-nav').classList.toggle('open');">
@@ -3298,7 +3295,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 		<div class="product-card">
 			<h3 class="font-weight-bold mb-0">KetoWater<sup>™</sup></h3>
 			<div class="stars mb-2">
-				<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+				<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:-3px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:-3px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:-3px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:-3px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:-3px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
 				<span class="text-dark">|</span>
 				<span class="font-weight-bold text-success">In Stock</span>
 			</div>
@@ -3325,9 +3322,9 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 
 		<div class="hero-cta">
 			<div class="button-center riskfree text-center text-uppercase">
-				<a class="action" href="#buynow" onclick="scrollToCards();return false;">TRY NOW — GET UP TO 45% OFF <i class="fas fa-arrow-right"></i></a>
+				<a class="action" href="#buynow" onclick="scrollToCards();return false;">TRY NOW — GET UP TO 45% OFF <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
 			</div>
-			<p class="secure-text"><i class="fas fa-lock"></i>100% Secure Encrypted Transactions</p>
+			<p class="secure-text"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>100% Secure Encrypted Transactions</p>
 		</div>
 
 	</div>
@@ -3476,7 +3473,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 
 				<div class="col-12 col-lg-6 col-md-7 mx-auto mb-3 mb-md-0 mt-lg-4 py-1 py-md-3">
 					<div class="button-center riskfree text-center text-uppercase">
-						<a class="action" href="#buynow" onclick="scrollToCards();return false;">Try KetoWater<sup>™</sup> Today <i class="fas fa-arrow-right"></i></a>
+						<a class="action" href="#buynow" onclick="scrollToCards();return false;">Try KetoWater<sup>™</sup> Today <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
 					</div>
 				</div>
 			</div>
@@ -3589,11 +3586,11 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
                 <h2>KetoWater vs <br><span class="accent">Regular Keto Pills</span></h2>
             </div>
             <div class="kw-compare-product kw-compare-product--featured">
-                <img src="Images/comparison/ketowater.webp" alt="KetoWater">
+                <img src="Images/comparison/ketowater.webp" alt="KetoWater" width="4096" height="4096">
                 <div class="label">KetoWater&trade;</div>
             </div>
             <div class="kw-compare-product kw-compare-product--regular">
-                <img src="Images/comparison/competitor.webp" alt="Regular Keto Pills">
+                <img src="Images/comparison/competitor.webp" alt="Regular Keto Pills" width="1690" height="1309">
                 <div class="label">Regular Keto Pills</div>
             </div>
 
@@ -4255,7 +4252,7 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 					</div>
 					<div class="col-12 col-lg-6 col-md-10 mx-auto prod-description px-1 px-md-3 my-auto">
 						<h3 class="font-weight-bold mb-0">KetoWater<sup>™</sup></h3>
-						<div class="stars mb-2"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span class="text-dark">|</span> <span class="font-weight-bold text-success">In Stock</span></div>
+						<div class="stars mb-2"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:-3px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:-3px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:-3px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:-3px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:-3px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> <span class="text-dark">|</span> <span class="font-weight-bold text-success">In Stock</span></div>
 						<div class="pxp-tp-wrap"><span class="pxp-trustpilot-bar"><img src="Images/star-4.5.svg" alt="Trustpilot Stars" class="pxp-tp-stars"><span class="pxp-tp-score">4.7</span><span class="pxp-tp-sep">|</span><span class="pxp-tp-text">Rated <strong>Excellent</strong> based on 2000+ Reviews</span></span></div>
 						<p class="mt-2 mt-md-0">The powerful natural formula inside KetoWater™ helps you burn fat fast and drop stubborn pounds…</p>
 						<ul class="check-list">
@@ -4267,10 +4264,10 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
 						<div class="pxp-social-proof"><span class="pxp-sp-group"><img src="Images/socials.webp" alt="Happy Customers" class="pxp-sp-faces"><span class="pxp-sp-text"><strong>+2K</strong> Happy Customers</span></span><span class="pxp-sp-stock"><span class="pxp-sp-dot"></span> In stock and ready to ship</span></div>
 
 						<div class="button-center riskfree text-center text-uppercase">
-														<a class="action" style="color:#000;" href="#buynow" onclick="scrollToCards();return false;">TRY NOW — GET UP TO 61% OFF <i class="fas fa-arrow-right"></i></a>
+														<a class="action" style="color:#000;" href="#buynow" onclick="scrollToCards();return false;">TRY NOW — GET UP TO 61% OFF <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
 													</div>
 
-						<p class="text-center secure-text my-2"><i class="fas fa-lock"></i> 100% Secure Encrypted Transactions</p>
+						<p class="text-center secure-text my-2"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 100% Secure Encrypted Transactions</p>
 					</div>
 				</div>
 			</div>
@@ -4730,7 +4727,7 @@ button:focus-visible {
     </div>
     <div class="mt-product-content">
       <div class="mt-product-image">
-        <img src="product_images/2_jar.webp" alt="KetoWater 2 Jars" style="border-radius: 12px;">
+        <img src="product_images/2_jar.webp" alt="KetoWater 2 Jars" style="border-radius: 12px;" width="2048" height="1672">
       </div>
       <div class="mt-product-details">
         <div class="mt-product-price">
@@ -4759,7 +4756,7 @@ button:focus-visible {
     </div>
     <div class="mt-product-content">
       <div class="mt-product-image">
-        <img src="product_images/5plus1_jar.webp" alt="KetoWater 5+1 Jars - Best Value" style="border-radius: 12px;">
+        <img src="product_images/5plus1_jar.webp" alt="KetoWater 5+1 Jars - Best Value" style="border-radius: 12px;" width="2048" height="1630">
       </div>
       <div class="mt-product-details">
         <div class="mt-product-price">
@@ -4790,7 +4787,7 @@ button:focus-visible {
     </div>
     <div class="mt-product-content">
       <div class="mt-product-image">
-        <img src="product_images/3_jar.webp" alt="KetoWater 3 Jars" style="border-radius: 12px;">
+        <img src="product_images/3_jar.webp" alt="KetoWater 3 Jars" style="border-radius: 12px;" width="2048" height="1635">
       </div>
       <div class="mt-product-details">
         <div class="mt-product-price">
@@ -4825,7 +4822,7 @@ button:focus-visible {
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-8 col-md-11 mx-auto">
-            	<h5 class="text-center mb-0"><i class="fas fa-lock"></i> 100% SAFE & SECURE CHECKOUT WITH:</h5>
+            	<h5 class="text-center mb-0"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 100% SAFE & SECURE CHECKOUT WITH:</h5>
                     <img class="img-fluid mx-auto d-block mt-0 mb-2" src="https://cdn.truegcloud.com/ovunashop/img/credit-cards-logos.png" alt="">
             </div>
         </div>
@@ -5133,9 +5130,9 @@ button:focus-visible {
 			<div class="row">
 				<div class="col-12 col-lg-6 col-md-7 mx-auto mb-3 mb-lg-5 py-1">
 					<div class="button-center riskfree text-center text-uppercase">
-						<a class="action" href="#buynow" onclick="scrollToCards();return false;">Order KetoWater<sup>™</sup> Today <i class="fas fa-arrow-right"></i></a>
+						<a class="action" href="#buynow" onclick="scrollToCards();return false;">Order KetoWater<sup>™</sup> Today <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
 					 </div>
-					<p class="text-center secure-text my-2"><i class="fas fa-lock"></i> 100% Secure Encrypted Transactions</p>
+					<p class="text-center secure-text my-2"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 100% Secure Encrypted Transactions</p>
 				</div>
 			</div>
 		</div>
@@ -5314,7 +5311,7 @@ button:focus-visible {
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-2">
-				<img src="logo.webp" alt="KetoWater" class="img-fluid mb-4" style="max-width: 150px;">
+				<img src="logo.webp" alt="KetoWater" class="img-fluid mb-4" style="max-width: 150px;" width="1254" height="1681">
 			</div>
 			<div class="col-lg-6 order-lg-1">
 				<h6 style="color: #A4F13A;">Disclaimer</h6>
