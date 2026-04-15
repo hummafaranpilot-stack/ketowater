@@ -227,12 +227,7 @@
             color: #AAFF00;
             border: 1px solid #AAFF00;
         }
-        .order-badge.bump {
-            background: #42A644;
-            color: #fff;
-            border: none;
-        }
-        .product-card:hover {
+.product-card:hover {
             transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.06);
             border-color: #AAFF00;
@@ -799,96 +794,7 @@
             text-underline-offset: 3px;
         }
 
-        /* eBook Bonus Section */
-        #ebook-bonus {
-            display: none;
-            background: linear-gradient(135deg, #080f09, #0f2012);
-            padding: 60px 20px 70px;
-            text-align: center;
-            font-family: 'Open Sans', Arial, sans-serif;
-            border-top: 2px solid rgba(170,255,0,0.3);
-        }
-        #ebook-bonus .bonus-tag {
-            display: inline-block;
-            background: #AAFF00;
-            color: #080f09;
-            font-family: 'Open Sans', Arial, sans-serif;
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            padding: 6px 20px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-        }
-        #ebook-bonus h2 {
-            font-family: 'Open Sans', Arial, sans-serif;
-            font-size: 32px;
-            color: #AAFF00;
-            font-weight: 700;
-            margin-bottom: 12px;
-            font-style: italic;
-        }
-        #ebook-bonus .bonus-sub {
-            font-size: 17px;
-            color: #cfd8dc;
-            max-width: 600px;
-            margin: 0 auto 44px;
-            line-height: 1.7;
-        }
-        .ebook-bonus-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            max-width: 760px;
-            margin: 0 auto;
-        }
-        .ebook-bonus-card {
-            background: rgba(255,255,255,0.05);
-            border: 2px solid rgba(170,255,0,0.3);
-            border-radius: 20px;
-            padding: 36px 28px 32px;
-            width: 300px;
-            transition: transform 0.3s ease;
-        }
-        .ebook-bonus-card:hover { transform: translateY(-6px); }
-        .ebook-bonus-card img {
-            max-height: 190px;
-            max-width: 150px;
-            object-fit: contain;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
-            margin-bottom: 20px;
-        }
-        .ebook-bonus-card h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-        .ebook-bonus-card p {
-            font-size: 14px;
-            color: #8ecfcf;
-            line-height: 1.6;
-            margin-bottom: 22px;
-        }
-        .ebook-dl-btn {
-            display: inline-block;
-            background-color: #AAFF00;
-            color: #080f09;
-            font-weight: 700;
-            font-size: 14px;
-            padding: 13px 28px;
-            border-radius: 50px;
-            text-decoration: none;
-            width: 100%;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        .ebook-dl-btn:hover { background-color: #fff; transform: translateY(-2px); }
         @media (max-width: 768px) {
-            #ebook-bonus h2 { font-size: 24px; }
-            .ebook-bonus-card { width: 100%; max-width: 320px; }
             .order-summary-box { padding: 14px 16px; }
         }
 
@@ -1123,29 +1029,6 @@
 
     </section>
 
-    <!-- eBook Bonus Section - shown only for 5+1 bundle (main-7) -->
-    <section id="ebook-bonus">
-        <div class="bonus-tag">&#9733; Exclusive Bonus &mdash; 5+1 Jar Package</div>
-        <h2>Your Free eBook Bonuses Are Ready!</h2>
-        <p class="bonus-sub">
-            As a thank you for choosing our premium 5+1 package,
-            enjoy these two digital guides &mdash; yours to keep forever.
-        </p>
-        <div class="ebook-bonus-grid">
-            <div class="ebook-bonus-card">
-                <img src="eBooks/mockup_ebook_30.png" alt="30-Day Keto Meal Plan">
-                <h3>30-Day Keto Meal Plan</h3>
-                <p>A complete day-by-day keto meal guide designed to maximize your KetoWater&trade; results.</p>
-                <a href="eBooks/30 days plan.pdf" class="ebook-dl-btn" target="_blank">&#11015; Download Now</a>
-            </div>
-            <div class="ebook-bonus-card">
-                <img src="eBooks/mockup_ebook_1.png" alt="Free Keto Guide">
-                <h3>Free Keto Success Guide</h3>
-                <p>Your comprehensive guide to entering ketosis faster and sustaining fat-burning results.</p>
-                <a href="eBooks/prosta guide.pdf" class="ebook-dl-btn" target="_blank">&#11015; Download Now</a>
-            </div>
-        </div>
-    </section>
 
     <!-- Order Details Section -->
     <section class="order-details-section">
@@ -1208,16 +1091,12 @@
             var params = new URLSearchParams(window.location.search);
 
             var PRODUCTS = {
-                'main-1':  { name: 'KetoWater&trade;', desc: '1 Jar (30-Day Supply)',       img: 'product_images/1_jar.png', type: 'main' },
-                'main-2':  { name: 'KetoWater&trade;', desc: '2 Jars (60-Day Supply)',      img: 'product_images/2_jar.png', type: 'main' },
-                'main-3':  { name: 'KetoWater&trade;', desc: '3 Jars (90-Day Supply)',      img: 'product_images/3_jar.png', type: 'main' },
-                'main-4':  { name: 'KetoWater&trade;', desc: '4 Jars (120-Day Supply)',     img: 'product_images/4_jar.png', type: 'main' },
-                'main-7':  { name: 'KetoWater&trade;', desc: '5+1 Jars (150-Day Supply)',   img: 'product_images/5plus1_jar.png', type: 'main', ebooks: true },
-                'up-1':    { name: 'KetoWater&trade;', desc: '1 Jar (30-Day Supply)',       img: 'product_images/1_jar.png', type: 'upsell1' },
-                'up-3':    { name: 'KetoWater&trade;', desc: '3 Jars (90-Day Supply)',      img: 'product_images/3_jar.png', type: 'upsell1' },
-                'up-6':    { name: 'KetoWater&trade;', desc: '6 Jars (180-Day Supply)',     img: 'product_images/4_jar.png', type: 'upsell1' },
-                'ebook1':  { name: '30-Day Keto Meal Plan', desc: 'Digital eBook Guide',    img: 'eBooks/mockup_ebook_30.png', type: 'bump', download: 'eBooks/30 days plan.pdf' },
-                'ebook2':  { name: 'Keto Success Guide',    desc: 'Digital eBook Guide',    img: 'eBooks/mockup_ebook_1.png',  type: 'bump', download: 'eBooks/prosta guide.pdf' }
+                '1':    { name: 'KetoWater\u2122 - 2 Jars 1 Bottle',          desc: '2 Jar (60-Day Supply)',       img: 'product_images/2_jar.webp',       type: 'main' },
+                '3':    { name: 'KetoWater\u2122 - 3 Jars 1 Bottle',          desc: '3 Jars (90-Day Supply)',      img: 'product_images/3_jar.webp',       type: 'main' },
+                '6':    { name: 'KetoWater\u2122 - 6 Jars 1 Bottle',          desc: '5+1 Jars (180-Day Supply)',   img: 'product_images/5plus1_jar.png',   type: 'main' },
+                'up2':  { name: 'KetoWater\u2122 - 2 Jars 1 Bottle (Upsell)', desc: '2 Jar (60-Day Supply)',       img: 'product_images/2_jar.webp',       type: 'upsell1' },
+                'up3':  { name: 'KetoWater\u2122 - 3 Jars 1 Bottle (Upsell)', desc: '3 Jars (90-Day Supply)',      img: 'product_images/3_jar.webp',       type: 'upsell1' },
+                'up6':  { name: 'KetoWater\u2122 - 6 Jars 1 Bottle (Upsell)', desc: '5+1 Jars (180-Day Supply)',   img: 'product_images/5plus1_jar.png',   type: 'upsell1' }
             };
 
             var HEADLINES = {
@@ -1325,11 +1204,6 @@
                 productListContainer.innerHTML = '<div class="product-card"><img src="product_images/2_jar.png" alt="KetoWater"><h3>KetoWater&trade;</h3><p>Your order is confirmed.</p></div>';
             }
 
-            // Bonus eBook Section for 5+1 bundle
-            if (itemIds.indexOf('main-7') !== -1) {
-                var bonus = document.getElementById('ebook-bonus');
-                if (bonus) bonus.style.display = 'block';
-            }
         });
     </script>
 
