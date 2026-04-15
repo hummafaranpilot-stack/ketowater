@@ -26,6 +26,8 @@
 #kw-sk.kw-sk-out{opacity:0;pointer-events:none}
 .kw-sk-s{background:linear-gradient(90deg,#122008 25%,#1e3a10 50%,#122008 75%);background-size:400% 100%;animation:kw-skshimmer 1.5s ease-in-out infinite;border-radius:6px}
 @keyframes kw-skshimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+/* ── Minimalistic image shimmer (non-gallery images) ── */
+.kw-img-ld{background:linear-gradient(90deg,#1a1a1a 25%,#2e2e2e 50%,#1a1a1a 75%);background-size:400% 100%;animation:kw-skshimmer 1.5s ease-in-out infinite;border-radius:4px}
         </style>
         <style type="text/css">
             .kw-spanel{display:none}.kw-spanel-active{display:block!important}
@@ -950,6 +952,20 @@
                 if(e.target === this) closeGifPopup();
             });
 
+            // Minimalistic shimmer loader for all content images
+            (function(){
+                document.querySelectorAll('img').forEach(function(img){
+                    if(img.closest('.image_item')) return; // already has progress-bar loader
+                    if(img.closest('#kw-cb-badge')) return; // static ClickBank badge
+                    if(img.id === 'kw-proof-lb-img') return; // lightbox placeholder
+                    if(img.complete && img.naturalWidth > 0) return; // already loaded
+                    img.classList.add('kw-img-ld');
+                    var done = function(){ img.classList.remove('kw-img-ld'); };
+                    img.addEventListener('load', done, {once:true});
+                    img.addEventListener('error', done, {once:true});
+                });
+            })();
+
             // Percentage loader for each image_item
             document.querySelectorAll('.image_item').forEach(function(item){
                 var a = item.querySelector('a');
@@ -1816,10 +1832,7 @@
 </style>
 
 <a href="https://t.me/TrustedNutraProduct" target="_blank" id="kw-tg-float" title="Contact us on Telegram">
-  <span id="kw-tg-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-  </span>
-  <span id="kw-tg-label">CHAT NOW!</span>
+  <img src="https://static.vecteezy.com/system/resources/previews/020/964/381/non_2x/telegram-circle-icon-for-web-design-free-png.png" alt="Telegram" id="kw-tg-icon-img">
 </a>
 
 <style>
@@ -1833,25 +1846,25 @@
   justify-content: center;
   width: 58px;
   height: 58px;
-  background: #4aabdb;
+  background: transparent;
   border-radius: 50%;
-  box-shadow: 0 4px 18px rgba(34,158,217,.55);
+  box-shadow: 0 4px 18px rgba(34,158,217,.45);
   text-decoration: none;
-  transition: background .2s, box-shadow .2s, transform .2s;
+  transition: box-shadow .2s, transform .2s;
 }
 #kw-tg-float:hover {
-  background: #229ED9;
   box-shadow: 0 6px 24px rgba(34,158,217,.75);
   transform: scale(1.08);
 }
-#kw-tg-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#kw-tg-icon-img {
+  width: 58px;
+  height: 58px;
+  display: block;
+  border-radius: 50%;
 }
-#kw-tg-label { display: none; }
 @media (max-width: 767px) {
   #kw-tg-float { bottom: 18px; right: 14px; width: 52px; height: 52px; }
+  #kw-tg-icon-img { width: 52px; height: 52px; }
 }
 </style>
 
