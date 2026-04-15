@@ -17,9 +17,9 @@
 .guarantee-track{display:flex;align-items:center;width:max-content;animation:guarantee-scroll 70s linear infinite}
 .guarantee-track:hover{animation-play-state:paused}
 .guarantee-item{display:flex;align-items:center;gap:8px;padding:0 18px;color:#001C38;font-family:'Amariya','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400;font-size:26px;line-height:1;white-space:nowrap}
-.guarantee-item img{width:28px;height:28px;flex-shrink:0}
+.guarantee-item img,.guarantee-item svg{width:28px;height:28px;flex-shrink:0}
 @keyframes guarantee-scroll{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-50%,0,0)}}
-@media(max-width:768px){.guarantee-bar{padding:16px 0}.guarantee-item{font-size:23px;padding:0 18px;gap:10px}.guarantee-item img{width:26px;height:26px}.guarantee-track{animation-duration:55s}}
+@media(max-width:768px){.guarantee-bar{padding:16px 0}.guarantee-item{font-size:23px;padding:0 18px;gap:10px}.guarantee-item img,.guarantee-item svg{width:26px;height:26px}.guarantee-track{animation-duration:55s}}
 
 /* ── Skeleton Loader ── */
 #kw-sk{position:fixed;inset:0;z-index:10000;background:#0d1a0a;overflow:hidden;transition:opacity .45s ease}
