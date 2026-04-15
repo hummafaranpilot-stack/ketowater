@@ -1193,7 +1193,13 @@ Section-6
 	border-radius: 4px;
 	box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
 	-webkit-box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
+	aspect-ratio: 1;
+	overflow: hidden;
 }
+#kw-img-panel-2 .image_item,
+#kw-img-panel-3 .image_item { aspect-ratio: unset; overflow: visible; }
+#kw-img-panel-2 .image_item img,
+#kw-img-panel-3 .image_item img { height: auto; object-fit: unset; }
 .image_item img {
 	width: 100%;
 	height: 100%;
@@ -1787,6 +1793,12 @@ ul.nature_form_list li p{font-size:16px; line-height:22px;}
 .image_grid { grid-template-columns:repeat(2,1fr); gap:8px; }
 .image_item { padding:2px; }
 
+/* Ready to use Graphics + Real Person — natural image size */
+#kw-img-panel-2 .image_item,
+#kw-img-panel-3 .image_item { aspect-ratio: unset; }
+#kw-img-panel-2 .image_item img,
+#kw-img-panel-3 .image_item img { height: auto; }
+
 /* Countries popup */
 #kw-countries-modal { width:95vw; max-height:88vh; padding:18px 12px 20px; }
 #kw-co-cats { gap:5px; }
@@ -2058,4 +2070,168 @@ ul.nature_form_list li p{font-size:16px; line-height:22px;}
 .view-all-countries-btn:hover {
     background: #2B9000;
     color: #fff;
+}
+
+/* ============================================================
+   GIF Gallery Section
+   ============================================================ */
+.section-gif-gallery {
+    background: #f3f9ff;
+    float: left;
+    width: 100%;
+    padding: 35px 0 40px;
+}
+
+/* Tabs */
+.kw-gif-tabs {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    justify-content: center;
+}
+.kw-gif-tab {
+    padding: 7px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 7px;
+    cursor: pointer;
+    color: #555;
+    transition: all .2s;
+}
+.kw-gif-tab:hover { border-color: #2B9000; color: #2B9000; }
+.kw-gif-tab-active { background: #2B9000 !important; border-color: #2B9000 !important; color: #fff !important; }
+.kw-gif-panel { display: none; }
+.kw-gif-panel-active { display: block; }
+
+/* 2-col grid: items 1+2 stacked left, item 3 (300x600) spans both rows right */
+.gif_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 18px auto 0;
+    max-width: 680px;
+}
+.gif_item:nth-child(1) { grid-column: 1; grid-row: 1; }
+.gif_item:nth-child(2) { grid-column: 1; grid-row: 2; }
+.gif_item:nth-child(3) { grid-column: 2; grid-row: 1 / 3; }
+.gif_item:nth-child(4) { grid-column: 1; grid-row: 3; }
+.gif_item:nth-child(5) { grid-column: 2; grid-row: 3; }
+.gif_item {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+    cursor: pointer;
+    transition: box-shadow .25s, transform .25s;
+    border: 2px solid transparent;
+}
+.gif_item:hover {
+    box-shadow: 0 8px 28px rgba(43,144,0,0.22);
+    transform: translateY(-4px);
+}
+.gif_item_active {
+    border-color: #2B9000 !important;
+    box-shadow: 0 8px 28px rgba(43,144,0,0.30) !important;
+}
+.gif_item a {
+    display: block;
+    text-decoration: none;
+}
+.gif_preview {
+    width: 100%;
+    overflow: hidden;
+}
+.gif_preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+/* hide old size label — info moves to lightbox */
+.gif_size_label { display: none; }
+
+/* GIF Preview Popup */
+.gif_lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+.gif_lightbox.gif_lb_active { display: flex; }
+.gif_lb_modal {
+    position: relative;
+    background: #000;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.6);
+    max-width: 780px;
+    width: 100%;
+    animation: gifPopIn .22s ease;
+}
+@keyframes gifPopIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
+}
+.gif_lb_close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    background: rgba(0,0,0,0.55);
+    border: 2px solid rgba(255,255,255,0.5);
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gif_lb_close:hover { background: rgba(0,0,0,0.85); border-color: #fff; }
+.gif_lb_body {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gif_lb_body img {
+    width: 100%;
+    max-height: 82vh;
+    object-fit: contain;
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .section-gif-gallery { padding: 30px 0 35px; }
+}
+@media (max-width: 767px) {
+    .gif_grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 24px auto 0;
+    }
+    .gif_item:nth-child(1),
+    .gif_item:nth-child(2),
+    .gif_item:nth-child(3),
+    .gif_item:nth-child(4),
+    .gif_item:nth-child(5) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+    .section-gif-gallery { padding: 25px 0 35px; }
+    .kw-gif-tabs { flex-wrap: wrap; }
+    .kw-gif-tab { padding: 8px 18px; font-size: 14px; }
+    .gif_lb_body { padding: 16px; }
 }

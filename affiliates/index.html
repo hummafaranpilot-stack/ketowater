@@ -899,6 +899,57 @@
                 });
             });
 
+            // GIF Gallery tabs
+            var gifTabs   = document.querySelectorAll('.kw-gif-tab');
+            var gifPanels = document.querySelectorAll('.kw-gif-panel');
+            gifTabs.forEach(function(tab){
+                tab.addEventListener('click', function(){
+                    gifTabs.forEach(function(t){ t.classList.remove('kw-gif-tab-active'); });
+                    gifPanels.forEach(function(p){ p.classList.remove('kw-gif-panel-active'); });
+                    this.classList.add('kw-gif-tab-active');
+                    var target = document.getElementById(this.getAttribute('data-panel'));
+                    if(target) target.classList.add('kw-gif-panel-active');
+                    // hide preview when switching tabs
+                    document.getElementById('gif-lightbox').classList.remove('gif_lb_active');
+                    document.querySelectorAll('.gif_item').forEach(function(i){ i.classList.remove('gif_item_active'); });
+                });
+            });
+
+            // GIF thumbnail click → inline preview, restart animation
+            document.addEventListener('click', function(e){
+                var link = e.target.closest('.gif_thumb_link');
+                if(!link) return;
+                e.preventDefault();
+                var gifSrc  = link.getAttribute('href');
+                var sizeLabel = link.closest('.gif_item').getAttribute('data-size');
+                var lb      = document.getElementById('gif-lightbox');
+                var lbImg   = document.getElementById('gif-lb-img');
+
+                // Restart GIF from frame 1: clear → reflow → reassign
+                lbImg.src = '';
+                lbImg.offsetWidth; // force reflow
+                lbImg.src = gifSrc;
+
+                // Highlight selected card
+                document.querySelectorAll('.gif_item').forEach(function(i){ i.classList.remove('gif_item_active'); });
+                link.closest('.gif_item').classList.add('gif_item_active');
+
+                // Show the popup
+                lb.classList.add('gif_lb_active');
+            });
+
+            // Close GIF preview
+            function closeGifPopup() {
+                document.getElementById('gif-lightbox').classList.remove('gif_lb_active');
+                document.querySelectorAll('.gif_item').forEach(function(i){ i.classList.remove('gif_item_active'); });
+                document.getElementById('gif-lb-img').src = '';
+            }
+            document.getElementById('gif-lb-close').addEventListener('click', closeGifPopup);
+            // Close on backdrop click
+            document.getElementById('gif-lightbox').addEventListener('click', function(e){
+                if(e.target === this) closeGifPopup();
+            });
+
             // Percentage loader for each image_item
             document.querySelectorAll('.image_item').forEach(function(item){
                 var a = item.querySelector('a');
@@ -957,6 +1008,7 @@
                 <div class="kw-img-tabs">
                     <button class="kw-img-tab kw-img-tab-active" data-panel="kw-img-panel-1">Product Images</button>
                     <button class="kw-img-tab" data-panel="kw-img-panel-2">Ready to use Graphics</button>
+                    <button class="kw-img-tab" data-panel="kw-img-panel-3">Real Person Images</button>
                 </div>
 
                 <!-- Panel 1: Product Images -->
@@ -1043,13 +1095,174 @@
                     </div>
                 </div>
 
+                <!-- Panel 3: Real Person Images (sorted by aspect ratio: Landscape → Square → Portrait) -->
+                <div class="kw-img-panel" id="kw-img-panel-3">
+                    <div class="image_grid">
+                        <!-- Landscape (wider than tall) -->
+                        <div class="image_item"><a href="../product_images/real-person/fast.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/fast.jpg" alt="Fast"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/camera7.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/camera7.jpg" alt="Camera 7"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/eat2.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/eat2.jpg" alt="Eat 2"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/wlcr.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/wlcr.jpg" alt="WLCR"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/camera9.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/camera9.jpg" alt="Camera 9"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/shop2.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/shop2.jpg" alt="Shop 2"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/video1.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/video1.jpg" alt="Video 1"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/shop1.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/shop1.jpg" alt="Shop 1"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/grace2.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/grace2.jpg" alt="Grace"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/camera8.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/camera8.jpg" alt="Camera 8"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/video3.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/video3.jpg" alt="Video 3"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/cindychen.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/cindychen.jpg" alt="Cindy Chen"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/fgr1.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/fgr1.jpg" alt="Figure 1"></a></div>
+                        <!-- Square (roughly 1:1) -->
+                        <div class="image_item"><a href="../product_images/real-person/manne.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/manne.jpg" alt="Manne"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/daviddean2.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/daviddean2.jpg" alt="David Dean"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/fgr2.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/fgr2.jpg" alt="Figure 2"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/beforeafter1.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/beforeafter1.jpg" alt="Before After 1"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/beforeafter2.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/beforeafter2.jpg" alt="Before After 2"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/samantha.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/samantha.jpg" alt="Samantha"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/video4.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/video4.jpg" alt="Video 4"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/result1.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/result1.jpg" alt="Result 1"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/run2.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/run2.jpg" alt="Run 2"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/john2.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/john2.jpg" alt="John"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/jane2.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/jane2.jpg" alt="Jane"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/mariah2.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/mariah2.jpg" alt="Mariah"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/jc.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/jc.jpg" alt="JC"></a></div>
+                        <!-- Portrait (taller than wide) -->
+                        <div class="image_item"><a href="../product_images/real-person/melissa.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/melissa.jpg" alt="Melissa"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/deby.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/deby.jpg" alt="Deby"></a></div>
+                        <div class="image_item"><a href="../product_images/real-person/selfie.jpg" class="thumbnail" target="_blank"><img src="../product_images/real-person/selfie.jpg" alt="Selfie"></a></div>
+                    </div>
+                </div>
+
                 <div class="button_box download_btn">
                     <a href="https://drive.google.com/drive/folders/15pwK6W8K1BgXqlWTsavXRdunflMAayM0?usp=sharing" target="_blank" class="common_button">DOWNLOAD ALL IMAGES <img src="images/btn-arw.webp" alt=""></a>
-                </div>                
+                </div>
             </div>
         </div>
-        
-        
+
+
+        <!-- GIF Gallery Section -->
+        <div class="section-gif-gallery" id="GifAds">
+            <div class="container">
+                <p class="common_heading"><span>KetoWater</span><br> GIF Gallery</p>
+                <p class="common_text">Click On Any GIF And It Will Open In A New Window Then Right Click<br class="hide-mob"> 'Save As' To Download It Onto Your Device</p>
+
+                <!-- GIF Section Tabs -->
+                <div class="kw-gif-tabs">
+                    <button class="kw-gif-tab kw-gif-tab-active" data-panel="kw-gif-panel-1">Campaign 1</button>
+                    <button class="kw-gif-tab" data-panel="kw-gif-panel-2">Campaign 2</button>
+                    <button class="kw-gif-tab" data-panel="kw-gif-panel-3">Campaign 3</button>
+                </div>
+
+                <!-- Panel 1 -->
+                <div class="kw-gif-panel kw-gif-panel-active" id="kw-gif-panel-1">
+                    <div class="gif_grid">
+                        <div class="gif_item" data-size="250 × 250">
+                            <a href="../product_images/gifs/1/250x250.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/1/250x250.gif" alt="250x250 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="300 × 250">
+                            <a href="../product_images/gifs/1/300x250.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/1/300x250.gif" alt="300x250 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="300 × 600">
+                            <a href="../product_images/gifs/1/300x600.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/1/300x600.gif" alt="300x600 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="320 × 50">
+                            <a href="../product_images/gifs/1/320x50.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/1/320x50.gif" alt="320x50 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="728 × 90">
+                            <a href="../product_images/gifs/1/728x90.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/1/728x90.gif" alt="728x90 GIF Ad"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 2 -->
+                <div class="kw-gif-panel" id="kw-gif-panel-2">
+                    <div class="gif_grid">
+                        <div class="gif_item" data-size="250 × 250">
+                            <a href="../product_images/gifs/2/250x250.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/2/250x250.gif" alt="250x250 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="300 × 250">
+                            <a href="../product_images/gifs/2/300x250.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/2/300x250.gif" alt="300x250 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="300 × 600">
+                            <a href="../product_images/gifs/2/300x600.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/2/300x600.gif" alt="300x600 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="320 × 50">
+                            <a href="../product_images/gifs/2/320x50.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/2/320x50.gif" alt="320x50 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="728 × 90">
+                            <a href="../product_images/gifs/2/728x90.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/2/728x90.gif" alt="728x90 GIF Ad"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 3 -->
+                <div class="kw-gif-panel" id="kw-gif-panel-3">
+                    <div class="gif_grid">
+                        <div class="gif_item" data-size="250 × 250">
+                            <a href="../product_images/gifs/3/250x250.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/3/250x250.gif" alt="250x250 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="300 × 250">
+                            <a href="../product_images/gifs/3/300x250.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/3/300x250.gif" alt="300x250 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="300 × 600">
+                            <a href="../product_images/gifs/3/300x600.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/3/300x600.gif" alt="300x600 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="320 × 50">
+                            <a href="../product_images/gifs/3/320x50.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/3/320x50.gif" alt="320x50 GIF Ad"></div>
+                            </a>
+                        </div>
+                        <div class="gif_item" data-size="728 × 90">
+                            <a href="../product_images/gifs/3/728x90.gif" class="gif_thumb_link">
+                                <div class="gif_preview"><img src="../product_images/gifs/3/728x90.gif" alt="728x90 GIF Ad"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GIF Preview Popup -->
+                <div class="gif_lightbox" id="gif-lightbox">
+                    <div class="gif_lb_modal">
+                        <button class="gif_lb_close" id="gif-lb-close">&times;</button>
+                        <div class="gif_lb_body">
+                            <img src="" id="gif-lb-img" alt="GIF Preview">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button_box download_btn">
+                    <a href="#" target="_blank" class="common_button">DOWNLOAD ALL GIFs <img src="images/btn-arw.webp" alt=""></a>
+                </div>
+            </div>
+        </div>
+
+
         <div class="section-8" id="VideoAds">
         	<div class="container">
             	<p class="common_heading"><span>Video Ads</span></p>
