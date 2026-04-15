@@ -6181,12 +6181,38 @@ function dismissDesktopToast(){var t=document.getElementById('desktop-toast');if
         'kw-sean':     '38c685f1ba26383bc32342bf8f78bd4d',
         'kw-eat':      '690e26e54ea5e2b5682e6def78140067'
     };
+    function preload(player){
+        if(player.dataset.cfPre)return;
+        player.dataset.cfPre='1';
+        var cfId=CF[player.getAttribute('data-video-id')];
+        if(!cfId)return;
+        var f=document.createElement('iframe');
+        f.src='https://iframe.videodelivery.net/'+cfId+'?preload=auto&controls=true';
+        f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';
+        f.setAttribute('allowfullscreen','');
+        f.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;border:none;visibility:hidden;pointer-events:none;';
+        player.appendChild(f);
+    }
+    /* First video: load immediately on page ready */
+    var first=document.querySelector('.mv-player[data-video-id="kw-hook"]');
+    if(first)preload(first);
+    /* All others: preload as user scrolls within 500px */
+    if(window.IntersectionObserver){
+        var io=new IntersectionObserver(function(entries){
+            entries.forEach(function(en){if(en.isIntersecting){preload(en.target);io.unobserve(en.target);}});
+        },{rootMargin:'500px 0px'});
+        document.querySelectorAll('.mv-player[data-cf-id]').forEach(function(p){
+            if(p.getAttribute('data-video-id')!=='kw-hook')io.observe(p);
+        });
+    }
     window.ytFacadeHover=function(){};
     window.ytFacadePlay=function(overlay){
         var player=overlay.closest('.mv-player');
         var cfId=CF[player.getAttribute('data-video-id')];
         if(!cfId)return;
+        /* Swap preloaded iframe for autoplay version */
         var old=player.querySelector('iframe');if(old)old.remove();
+        delete player.dataset.cfPre;
         var iframe=document.createElement('iframe');
         iframe.src='https://iframe.videodelivery.net/'+cfId+'?autoplay=true&controls=true';
         iframe.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';
