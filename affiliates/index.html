@@ -1807,30 +1807,100 @@
 
 <!-- Floating Telegram Button -->
 <!-- ClickBank Sticky Badge — bottom left -->
-<a href="https://www.clickbank.com" target="_blank" id="kw-cb-badge" title="ClickBank — Trusted & Secure">
-  <img src="https://cbtb.clickbank.net/dist/assets/logo-tab-white-en.png" alt="ClickBank Trusted Secure">
-</a>
+<div id="kw-cb-wrap">
+  <div id="kw-cb-popup">
+    <button id="kw-cb-close" aria-label="Close">&times;</button>
+    <p>ClickBank is the trusted retailer for <strong>ketowater.trustednutraproduct.com.</strong></p>
+    <p>If you aren't completely satisfied with your purchase, let us know. We'll make it right. Your satisfaction is guaranteed!</p>
+  </div>
+  <a href="#" id="kw-cb-badge" title="ClickBank — Trusted & Secure">
+    <img src="https://cbtb.clickbank.net/dist/assets/logo-tab-white-en.png" alt="ClickBank Trusted Secure">
+  </a>
+</div>
 <style>
-#kw-cb-badge {
+#kw-cb-wrap {
   position: fixed;
   bottom: 0;
   left: 20px;
   z-index: 9998;
+}
+#kw-cb-badge {
   display: block;
   line-height: 0;
   background: #000;
   border-radius: 8px 8px 0 0;
   padding: 6px 10px 4px;
+  text-decoration: none;
 }
 #kw-cb-badge img {
   display: block;
   height: 38px;
   width: auto;
 }
-@media (max-width: 767px) {
-  #kw-cb-badge { left: 12px; }
-  #kw-cb-badge img { height: 30px; }
+#kw-cb-popup {
+  display: block;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 14px 16px 14px 14px;
+  width: 260px;
+  font-size: 13px;
+  color: #222;
+  line-height: 1.5;
+  margin-bottom: 6px;
+  position: relative;
+  box-shadow: 0 4px 18px rgba(0,0,0,.18);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
 }
+#kw-cb-popup.kw-cb-show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+#kw-cb-popup p { margin: 0 0 8px; }
+#kw-cb-popup p:last-child { margin: 0; }
+#kw-cb-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #888;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+#kw-cb-close:hover { color: #222; }
+@media (max-width: 767px) {
+  #kw-cb-wrap { left: 12px; }
+  #kw-cb-badge img { height: 30px; }
+  #kw-cb-popup { width: 220px; font-size: 12px; }
+}
+</style>
+<script>
+(function(){
+  var badge = document.getElementById('kw-cb-badge');
+  var popup = document.getElementById('kw-cb-popup');
+  var close = document.getElementById('kw-cb-close');
+  badge.addEventListener('click', function(e){
+    e.preventDefault();
+    popup.classList.toggle('kw-cb-show');
+  });
+  close.addEventListener('click', function(e){
+    e.stopPropagation();
+    popup.classList.remove('kw-cb-show');
+  });
+  document.addEventListener('click', function(e){
+    if(!document.getElementById('kw-cb-wrap').contains(e.target)){
+      popup.classList.remove('kw-cb-show');
+    }
+  });
+})();
+</script>
 </style>
 
 <a href="https://t.me/TrustedNutraProduct" target="_blank" id="kw-tg-float" title="Contact us on Telegram">
