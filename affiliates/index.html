@@ -1801,19 +1801,19 @@
   z-index: 9998;
 }
 #kw-cb-badge {
-  display: block;
+  display: inline-block;
   line-height: 0;
   background: #000;
   border-radius: 6px 6px 0 0;
   padding: 4px 8px 3px;
   text-decoration: none;
+  overflow: hidden;
 }
 #kw-cb-badge img {
   display: block;
   height: 26px;
-  width: 148px;
-  object-fit: cover;
-  object-position: left center;
+  width: auto;
+  max-width: 90px;
 }
 #kw-cb-popup {
   display: block;
