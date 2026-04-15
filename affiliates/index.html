@@ -1784,14 +1784,9 @@
 <!-- Floating Telegram Button -->
 <!-- ClickBank Sticky Badge — bottom left -->
 <div id="kw-cb-wrap">
-  <div id="kw-cb-popup">
-    <button id="kw-cb-close" aria-label="Close">&times;</button>
-    <p>ClickBank is the trusted retailer for <strong>ketowater.trustednutraproduct.com.</strong></p>
-    <p>If you aren't completely satisfied with your purchase, let us know. We'll make it right. Your satisfaction is guaranteed!</p>
-  </div>
-  <a href="#" id="kw-cb-badge" title="ClickBank — Trusted & Secure">
+  <div id="kw-cb-badge">
     <img src="https://cbtb.clickbank.net/dist/assets/logo-tab-white-en.png" alt="ClickBank Trusted Secure">
-  </a>
+  </div>
 </div>
 <style>
 #kw-cb-wrap {
@@ -1814,68 +1809,10 @@
   width: auto !important;
   max-width: none !important;
 }
-#kw-cb-popup {
-  display: block;
-  background: #111;
-  border-radius: 6px 6px 0 0;
-  padding: 10px 28px 10px 10px;
-  width: 200px;
-  font-size: 11px;
-  color: #ddd;
-  line-height: 1.5;
-  margin-bottom: 0;
-  position: relative;
-  box-shadow: 0 -4px 14px rgba(0,0,0,.35);
-  opacity: 0;
-  transform: translateY(10px);
-  pointer-events: none;
-  transition: opacity .25s ease, transform .25s ease;
-}
-#kw-cb-popup.kw-cb-show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-#kw-cb-popup p { margin: 0 0 6px; }
-#kw-cb-popup p:last-child { margin: 0; }
-#kw-cb-popup strong { color: #fff; }
-#kw-cb-close {
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  background: none;
-  border: none;
-  font-size: 15px;
-  color: #888;
-  cursor: pointer;
-  line-height: 1;
-  padding: 0;
-}
-#kw-cb-close:hover { color: #fff; }
 @media (max-width: 767px) {
   #kw-cb-wrap { display: none; }
 }
 </style>
-<script>
-(function(){
-  var badge = document.getElementById('kw-cb-badge');
-  var popup = document.getElementById('kw-cb-popup');
-  var close = document.getElementById('kw-cb-close');
-  badge.addEventListener('click', function(e){
-    e.preventDefault();
-    popup.classList.toggle('kw-cb-show');
-  });
-  close.addEventListener('click', function(e){
-    e.stopPropagation();
-    popup.classList.remove('kw-cb-show');
-  });
-  document.addEventListener('click', function(e){
-    if(!document.getElementById('kw-cb-wrap').contains(e.target)){
-      popup.classList.remove('kw-cb-show');
-    }
-  });
-})();
-</script>
 </style>
 
 <a href="https://t.me/TrustedNutraProduct" target="_blank" id="kw-tg-float" title="Contact us on Telegram">
