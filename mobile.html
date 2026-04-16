@@ -3135,15 +3135,16 @@ html, body { overflow-x: hidden; scroll-behavior: smooth; }
   /* Top: Product image */
   .mt-product-image {
     width: 100%;
-    border: none;
-    border-bottom: 2px solid #e0e0e0;
+    border: 2px solid #252525;
     background: linear-gradient(135deg, #fdf6e3 0%, #f5e6c4 100%);
     padding: 0;
-    margin: 0;
+    margin: 0 auto 0.5rem;
     order: 0;
     display: block;
     line-height: 0;
-    border-radius: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 280px;
   }
 
   .mt-product-card .mt-product-image::before { content: none; display: none; }
@@ -6293,8 +6294,9 @@ function dismissDesktopToast(){var t=document.getElementById('desktop-toast');if
         video.play().catch(function(){ video.muted=true; video.play(); });
         var poster=player.querySelector('.mv-poster');if(poster)poster.style.display='none';
         /* Keep overlay as invisible tap zone (leave bottom 44px for native controls) */
-        overlay.querySelector('.mv-play-btn').style.display='none';
-        overlay.style.bottom='44px';
+        var playBtn=overlay.querySelector('.mv-play-btn');
+        if(playBtn)playBtn.parentNode.removeChild(playBtn);
+        overlay.style.cssText='position:absolute;top:0;left:0;right:0;bottom:44px;z-index:4;cursor:pointer;background:transparent;';
         var close=document.createElement('button');
         close.innerHTML='&#x2715;';
         close.style.cssText='position:absolute;top:14px;right:14px;z-index:7;background:rgba(0,0,0,0.6);color:#fff;border:none;width:38px;height:38px;border-radius:8px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;';
@@ -6305,8 +6307,8 @@ function dismissDesktopToast(){var t=document.getElementById('desktop-toast');if
             video.removeAttribute('controls');video.muted=true;
             close.remove();
             if(poster)poster.style.display='';
-            overlay.querySelector('.mv-play-btn').style.display='';
-            overlay.style.bottom='0';
+            overlay.style.cssText='';
+            overlay.innerHTML='<div class="mv-play-btn"><svg class="mv-play-icon" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="6,3 20,12 6,21"/></svg><svg class="mv-pause-icon" viewBox="0 0 24 24" fill="#fff" stroke="none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></div>';
         };
         player.appendChild(close);
     };
