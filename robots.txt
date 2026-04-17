@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /short/
+Disallow: /popup/
+Disallow: /lib/
+Disallow: /eBooks/
+Disallow: /Clickbank Structure/
+Disallow: /dummy.html
+Disallow: /index.backup.html
+
+Sitemap: https://ketowater.trustednutraproduct.com/sitemap.xml
