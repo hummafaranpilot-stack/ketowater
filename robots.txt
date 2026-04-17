@@ -1,3 +1,6 @@
+# KetoWater robots.txt
+# Note: Cloudflare may prepend its own managed content above this section
+
 User-agent: *
 Allow: /
 Disallow: /short/
