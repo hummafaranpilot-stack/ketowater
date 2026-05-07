@@ -30,8 +30,15 @@
 #kw-sk.kw-sk-out{opacity:0;pointer-events:none}
 .kw-sk-s{background:linear-gradient(90deg,#122008 25%,#1e3a10 50%,#122008 75%);background-size:400% 100%;animation:kw-skshimmer 1.5s ease-in-out infinite;border-radius:6px}
 @keyframes kw-skshimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
-/* ── Minimalistic image shimmer (non-gallery images) ── */
-.kw-img-ld{background:linear-gradient(90deg,#1a1a1a 25%,#2e2e2e 50%,#1a1a1a 75%);background-size:400% 100%;animation:kw-skshimmer 1.5s ease-in-out infinite;border-radius:4px}
+/* ── Product Images: See More collapsible grid ── */
+.image_grid_wrap{position:relative}
+.image_grid_wrap.is-collapsed .image_grid{-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 75%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,#000 75%,transparent 100%)}
+#kw-img-panel-1 .image_grid_wrap.is-collapsed .image_item:nth-child(n+13),
+#kw-img-panel-2 .image_grid_wrap.is-collapsed .image_item:nth-child(n+13){display:none}
+.see-more-btn{display:block;margin:30px auto 0;padding:14px 38px;background:#B8DE41;color:#1a1a1a;border:none;border-radius:8px;font-weight:800;font-size:14px;cursor:pointer;letter-spacing:0.6px;text-transform:uppercase;font-family:'Inter',sans-serif;transition:transform .15s ease,box-shadow .15s ease,background .15s ease;box-shadow:0 4px 16px rgba(184,222,65,0.35)}
+.see-more-btn:hover{transform:translateY(-2px);background:#c8f05a;box-shadow:0 8px 24px rgba(184,222,65,0.55)}
+.see-more-btn:active{transform:translateY(0)}
+@media (max-width:768px){.see-more-btn{padding:12px 28px;font-size:13px}}
         </style>
         <style type="text/css">
             .kw-spanel{display:none}.kw-spanel-active{display:block!important}
@@ -956,65 +963,32 @@
                 if(e.target === this) closeGifPopup();
             });
 
-            // Minimalistic shimmer loader for all content images
-            (function(){
-                document.querySelectorAll('img').forEach(function(img){
-                    if(img.closest('.image_item')) return; // already has progress-bar loader
-                    if(img.closest('#kw-cb-badge')) return; // static ClickBank badge
-                    if(img.id === 'kw-proof-lb-img') return; // lightbox placeholder
-                    if(img.complete && img.naturalWidth > 0) return; // already loaded
-                    img.classList.add('kw-img-ld');
-                    var done = function(){ img.classList.remove('kw-img-ld'); };
-                    img.addEventListener('load', done, {once:true});
-                    img.addEventListener('error', done, {once:true});
-                });
-            })();
-
-            // Percentage loader for each image_item
-            document.querySelectorAll('.image_item').forEach(function(item){
-                var a = item.querySelector('a');
-                var img = item.querySelector('img');
-                if(!img) return;
-
-                // Wrap contents
+            // See More setup for Tab 1 (Product Images) + Tab 2 (Ready to use Graphics)
+            // Pure CSS hides items beyond 12 (4 cols × 3 rows); mask gradient fades bottom for peek
+            function setupLoadMore(panelId, visibleItemCount) {
+                if (panelId !== 'kw-img-panel-1' && panelId !== 'kw-img-panel-2') return;
+                var panel = document.getElementById(panelId);
+                if (!panel) return;
+                var grid = panel.querySelector('.image_grid');
+                if (!grid) return;
+                var items = grid.querySelectorAll('.image_item');
+                if (items.length <= visibleItemCount) return;
+                if (grid.parentNode.classList.contains('image_grid_wrap')) return;
                 var wrap = document.createElement('div');
-                wrap.className = 'kw-img-wrap';
-
-                // Loader overlay
-                var loader = document.createElement('div');
-                loader.className = 'kw-img-loader';
-                loader.innerHTML = '<div class="kw-loader-bar-wrap"><div class="kw-loader-bar"></div></div><span class="kw-loader-pct">0%</span>';
-
-                a.parentNode.insertBefore(wrap, a);
-                wrap.appendChild(a);
-                wrap.appendChild(loader);
-                img.classList.add('loading');
-
-                var bar = loader.querySelector('.kw-loader-bar');
-                var pct = loader.querySelector('.kw-loader-pct');
-                var progress = 0;
-                var interval = setInterval(function(){
-                    progress += Math.random() * 18;
-                    if(progress > 90) progress = 90;
-                    bar.style.width = progress + '%';
-                    pct.textContent = Math.round(progress) + '%';
-                }, 120);
-
-                function onLoaded(){
-                    clearInterval(interval);
-                    bar.style.width = '100%';
-                    pct.textContent = '100%';
-                    img.classList.remove('loading');
-                    setTimeout(function(){ loader.classList.add('done'); }, 250);
-                }
-
-                if(img.complete && img.naturalWidth > 0){
-                    onLoaded();
-                } else {
-                    img.addEventListener('load', onLoaded);
-                    img.addEventListener('error', onLoaded);
-                }
-            });
+                wrap.className = 'image_grid_wrap is-collapsed';
+                grid.parentNode.insertBefore(wrap, grid);
+                wrap.appendChild(grid);
+                var btn = document.createElement('button');
+                btn.className = 'see-more-btn';
+                btn.textContent = 'See More';
+                btn.addEventListener('click', function(){
+                    wrap.classList.remove('is-collapsed');
+                    btn.style.display = 'none';
+                });
+                wrap.appendChild(btn);
+            }
+            setupLoadMore('kw-img-panel-1', 12);
+            setupLoadMore('kw-img-panel-2', 12);
 
         });
         </script>
@@ -1811,7 +1785,7 @@
 <!-- ClickBank Sticky Badge — bottom left -->
 <div id="kw-cb-wrap">
   <div id="kw-cb-badge">
-    <img src="https://cbtb.clickbank.net/dist/assets/logo-tab-white-en.png" alt="ClickBank Trusted Secure">
+    <img src="images/clickbank-logo.webp?v=20260507" alt="ClickBank Trusted Secure">
   </div>
 </div>
 <style>
