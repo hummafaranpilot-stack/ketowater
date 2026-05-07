@@ -5,9 +5,13 @@
         <meta charset="utf-8">
         <title>KetoWater™ Affiliate Program — Trusted Nutra Products</title>
         <meta name="description" content="Join the KetoWater™ Affiliate Program and earn commissions promoting a science-backed keto hydration supplement. Zero sugar, zero crash — high conversions, top-tier support.">
-        <link rel="icon" type="image/png" href="../favicon.png">     
+        <link rel="icon" type="image/png" href="../favicon.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
+        <!-- Preload critical above-the-fold hero assets -->
+        <link rel="preload" as="image" href="images/banner-product.webp" fetchpriority="high">
+        <link rel="preload" as="image" href="images/banner-bg.webp">
+
         <link rel="stylesheet" type="text/css" href="css/style.css?v=3">
         <style>
 /* === Amariya font for guarantee bar === */
@@ -1785,15 +1789,21 @@
   var sk=document.getElementById('kw-sk');
   if(!sk)return;
   var done=false;
+  var loaded=0, needed=2;
   function dismiss(){
     if(done)return; done=true;
     sk.classList.add('kw-sk-out');
     setTimeout(function(){if(sk.parentNode)sk.parentNode.removeChild(sk);},500);
+    /* Signal: any deferred UI can wait on this */
+    window.__skDismissed=true;
+    try{document.dispatchEvent(new Event('kw:sk-dismissed'));}catch(e){}
   }
-  var img=new Image();
-  img.onload=img.onerror=dismiss;
-  img.src='images/banner-bg.webp';
-  setTimeout(dismiss,3500);
+  function tick(){loaded++; if(loaded>=needed)dismiss();}
+  /* Track both hero images: small bg + large product photo */
+  var a=new Image(); a.onload=a.onerror=tick; a.src='images/banner-bg.webp';
+  var b=new Image(); b.onload=b.onerror=tick; b.src='images/banner-product.webp';
+  /* Hard fallback: 4s max (in case product image is slow on poor networks) */
+  setTimeout(dismiss,4000);
 })();
 </script>
 
